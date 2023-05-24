@@ -1,0 +1,32 @@
+-----  How I installed bootstrap: -----
+
+1) npm install react-bootstrap bootstrap
+
+2) In index.HTML
+
+<!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--Fin Bootstrap -->
+
+
+3) In app.jsx:
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+---------------------------------------------------------
+
+github passport https://github.com/ChisomUma/Login-Auth-App-with-Passport.js/tree/main
+
+diseño de vista productos:
+https://nicepage.com/html-templates/preview/new-bags-collection-89477?device=desktop
+
+template del shopping cart
+https://cssauthor.com/free-bootstrap-shopping-cart-templates/

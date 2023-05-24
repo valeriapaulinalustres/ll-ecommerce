@@ -1,0 +1,9 @@
+no funciona login con Github
+
+al login, redirigir al perfil de usuario
+
+no trae datos de usuario con req.user //solucionado con nueva ruta
+
+no mantiene al usuario en sesión al cambiar de vistas SEGUIR ACÁ *******
+
+CARRITO: YA TRAE PRODUCTOS Y TIENE MAP, EL RESTO FALTA
