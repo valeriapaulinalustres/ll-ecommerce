@@ -1,37 +1,37 @@
 import express from 'express'
-import config from './config.js'
+import config from './src/config.js'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 
 import path from 'path'
 
-import productsRouter from './routes/products.router.js'
-import cartsRouter from './routes/carts.router.js'
-import viewsRouter from './routes/views/views.router.js'
-import chatRouter from './routes/views/messages.router.js'
-import usersRouter from './routes/users.router.js'
-import usersViewRouter from './routes/views/usersView.router.js'
-import jwtRouter from './routes/jwt.router.js'
-import loggerTestRouter from './routes/loggerTest.router.js'
-import { __dirname } from './utils.js'
+import productsRouter from './src/routes/products.router.js'
+import cartsRouter from './src/routes/carts.router.js'
+import viewsRouter from './src/routes/views/views.router.js'
+import chatRouter from './src/routes/views/messages.router.js'
+import usersRouter from './src/routes/users.router.js'
+import usersViewRouter from './src/routes/views/usersView.router.js'
+import jwtRouter from './src/routes/jwt.router.js'
+import loggerTestRouter from './src/routes/loggerTest.router.js'
+import { __dirname } from './src/utils.js'
 import handlebars from 'express-handlebars'
 import {Server} from 'socket.io'
-import './persistencia/mongodb/dbConfig.js'
+import './src/persistencia/mongodb/dbConfig.js'
 
 import mongoStore from 'connect-mongo'
 
-import MessageManager from './persistencia/DAO/mongoManagers/MessageManager.js'
+import MessageManager from './src/persistencia/DAO/mongoManagers/MessageManager.js'
 const messageManager = new MessageManager()
 //passport
 import passport from 'passport'
-import './passport/passportStrategies.js'
-import { errorMiddleware } from './utils/errors/errorsMiddleware.js'
-import { createLog } from './middlewares/winston.middleware.js'
+import './src/passport/passportStrategies.js'
+import { errorMiddleware } from './src/utils/errors/errorsMiddleware.js'
+import { createLog } from './src/middlewares/winston.middleware.js'
 import cors from 'cors'
 
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { swaggerSetup } from './swaggerSpecs.js'
+import { swaggerSetup } from './src/swaggerSpecs.js'
 
 const app = express()
 
