@@ -6,5 +6,10 @@
     ],
     "routes": [
        { "src": "/(.*)", "dest": "/" }
-    ]
+    ],
+    "functions": {
+      "api/test.php": {
+        "runtime": "vercel-php@0.5.2"
+      }
+    }
  }
