@@ -2,14 +2,11 @@
     "version": 2,
     "name": "back",
     "builds": [
-       { "src": "*", "use": "@vercel/node" }
+       { "src": "index.js", "use": "@vercel/node" }
     ],
     "routes": [
-       { "src": "/(.*)", "dest": "/" }
-    ],
-    "functions": {
-      "api/test.php": {
-        "runtime": "vercel-php@0.5.2"
-      }
-    }
+       { "src": "/(.*)", "dest": "index.js" }
+    ]
+   
  }
+ 
