@@ -39,9 +39,10 @@ async function getCurrentUserFromMail(mail){
       email,
       password,
     })
+    console.log(response)
     setExistUser(response.existUser)
     
-console.log(response)
+
     if ( response.existUser) {
       toastAlert('success', response.message)
      

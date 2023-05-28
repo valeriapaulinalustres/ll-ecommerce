@@ -12,6 +12,7 @@ import { ProductsProvider } from "./context/ProductsContext";
 import Product from "./views/product/Product";
 import Cart from "./views/cart/Cart";
 import { CartProvider } from "./context/CartContext";
+import AddProduct from "./views/addProduct/AddProduct";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/edit-product" element={<AddProduct />} />
           </Routes>
         </BrowserRouter>
         </CartProvider>

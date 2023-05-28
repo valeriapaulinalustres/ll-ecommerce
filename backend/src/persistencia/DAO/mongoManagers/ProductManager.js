@@ -113,7 +113,8 @@ export default class ProductManager {
         !product.code ||
         !product.stock ||
         !product.status ||
-        !product.category
+        !product.category ||
+        !product.thumbnails
       ) {
         CustomError.createCustomError({
           name: ErrorsName.PRODUCT_DATA_INCOMPLETE,
@@ -190,6 +191,11 @@ export default class ProductManager {
   }
 
   async updateProduct(id, newProduct, owner) {
+   console.log('desde el manager', 'id',id, 'pr', newProduct, 'o', owner)
+
+// let owner = own.owner
+// let newProduct = product.updatedProduct
+
     try {
       if (id.length != 24) {
         CustomError.createCustomError({
@@ -207,7 +213,7 @@ export default class ProductManager {
         !newProduct.code ||
         !newProduct.stock ||
         !newProduct.status ||
-        !newProduct.category
+        !newProduct.category 
       ) {
         CustomError.createCustomError({
           name: ErrorsName.PRODUCT_DATA_INCOMPLETE,
@@ -219,7 +225,8 @@ export default class ProductManager {
       }
 
       let product = await productsModel.find({ _id: id });
-
+console.log(product) //array, lo trae bien
+//console.log('owner', owner.role)
 
       if (owner.role === "premium") {
         if (product[0].owner !== owner.email) {
@@ -248,6 +255,7 @@ export default class ProductManager {
         { new: true }
       );
       logger.info("Producto actualizado con éxito");
+      console.log(updatedProduct)
       return updatedProduct;
     } catch (error) {
       logger.error("Error desde el manager", error);

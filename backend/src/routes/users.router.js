@@ -12,6 +12,7 @@ import {
   getUserDataFromMailController, 
   addCartToUserController
 } from '../controllers/users.controller.js'
+import { generateToken } from '../utils.js'
 
 
 
@@ -79,9 +80,10 @@ router.get("/registro/success", (req,res) => {
       failureRedirect: '/api/users/login/error',
       successRedirect: '/api/users/login/success',
       passReqToCallback: true,
+      session: true
      }),
      function (req, res) {
-      res.redirect('/api/users/login/success', req.user) }
+      res.redirect('/api/users/login/success', req.user) } //le manda a la ruta success el usuario
   )
 
 //   router.post('/login',
@@ -93,7 +95,11 @@ router.get("/registro/success", (req,res) => {
 
 
   router.get("/login/success", async (req,res) => {
-    res.json({existUser: true, message:'Login realizado con éxito', user:req.user})
+    //----- Autenticación de usuarios ---
+const token = generateToken(req.user)
+console.log('token generado con éxito', token)
+ res.cookie('token', token, { httpOnly: true }).json({existUser: true, message:'Login realizado con éxito', user:req.user, token }).send(req.session.sessionID)
+   // res.json({existUser: true, message:'Login realizado con éxito', user:req.user})
     });
     
     router.get("/login/error", async (req,res) => {

@@ -1,7 +1,7 @@
 import passport from "passport";
 import { userModel } from "../../src/persistencia/mongodb/models/user.model.js";
 import { Strategy as LocalStrategy } from "passport-local";
-import { hashPassword, comparePasswords } from "../utils.js";
+import { hashPassword, comparePasswords, generateToken } from "../utils.js";
 import { Strategy as GithubStrategy } from "passport-github2";
 import UsersDBDTO from "../persistencia/DTO/usersDB.dto.js";
 import config from "../config.js";
@@ -74,11 +74,16 @@ passport.use(
 
           if (isPassword) {
             console.log("Login realizado con éxito");
+
             req.session.fullName = user.full_name;
             req.session.email = user.email;
             req.session.password = user.password;
             req.session.role = user.role;
             req.user = user; //funciona
+            req.session.user = user
+           
+
+
           
             return done(null, user); //el primer null se refiere al error, lo segundo a si encontró usuario
           } else {

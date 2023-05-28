@@ -5,12 +5,16 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import UsersContext from "../../context/UsersContext";
 import { toastAlert } from "../../utils/alerts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartContext from "../../context/CartContext";
+import {TfiPencil} from 'react-icons/tfi'
+import {RiDeleteBin6Line} from 'react-icons/ri'
+import styles from '../../styles/Product.module.css'
 
 function Product() {
 
-    const {productById} = useContext(ProductsContext)
+    const {productById,    productToEdit, 
+      setProductToEdit} = useContext(ProductsContext)
 const {existUser, user} = useContext(UsersContext)
 const {
   emptyCart, 
@@ -22,8 +26,10 @@ const {
 
 const navigate = useNavigate()
 
-    const {title, description, thumbnails, price, _id} = productById
+    const {title, description, thumbnails, price, _id, category, code, stock} = productById
 console.log(existUser)
+
+
 function handleAddToCart (pid) {
     if (existUser) {
       if(!user.cartId) {
@@ -31,7 +37,7 @@ function handleAddToCart (pid) {
       } else {
         console.log('agregar al carr', user);
         console.log(pid)
-        addProductToCart(pid, user.cartId)
+        addProductToCart(pid, user.cartId, user)
       }
     
       
@@ -42,18 +48,45 @@ function handleAddToCart (pid) {
  
 }
 
+function handleEditProduct (){
+  console.log(productById)
+  
+  navigate('/edit-product')
+}
+console.log('product to edit',productToEdit)
 
   return (
-    <div>
-   <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={`${thumbnails[0]}`}/>
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>{description}</Card.Text>
-        <Card.Title>Precio: ${price}</Card.Title>
+    <div className={styles.productContainer}>
+<div>
+<img src={`${thumbnails[0]}`} width="800px"/>
+</div>
+<div>
+<h2>{title}</h2>
+        <h4>Categoría: {category}</h4>
+        <h5>Código: {code}</h5>
+        <h3>{description}</h3>
+        <h2>Precio: ${price}</h2>
+        <h4>Stock: {stock}</h4>
         <Button variant="primary" onClick={()=>handleAddToCart(_id)}>Agregar al carrito</Button>
-      </Card.Body>
-    </Card>
+        {
+        (user.role === 'admin' || user.role === 'premium') &&
+        <div>
+        <Button>
+          <TfiPencil onClick={handleEditProduct} />
+        </Button>
+        <Button>
+          <RiDeleteBin6Line />
+        </Button>
+        </div>
+}
+<Link to='/'>
+    <Button>Volver al Home</Button>
+    </Link>
+</div>
+
+
+   
+    
     </div>
   )
 }

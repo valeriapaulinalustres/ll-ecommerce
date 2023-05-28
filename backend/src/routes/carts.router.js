@@ -11,6 +11,7 @@ import {
   completeSaleController
 } from "../controllers/carts.controller.js";
 import { verificarUsuarioClient } from "../middlewares/auth.js";
+import { jwtValidation } from '../middlewares/jwt.middlewares.js'
 
 const router = Router();
 

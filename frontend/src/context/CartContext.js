@@ -54,11 +54,44 @@ async function getCartById (cid) {
 }
 
 //Agrega un producto a un carrito
-async function addProductToCart (pid, cid) {
+async function addProductToCart (pid, cid, user) {
     console.log(pid, cid)
     const response = await fetchFunction(`/api/carts/${cid}/product/${pid}`,{
-        pid:pid, cid: cid})
+        user
+    })
 console.log(response)
+}
+
+//Elimina un producto del carrito NO FUNCIONA
+async function deleteProductFromCart (cid,pid){
+    try {
+        const response = await fetch(`/api/carts/${cid}/product/${pid}`, {
+        
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({user})
+        })
+        let responseData = await response.json();
+        console.log(responseData)  
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+async function deleteCart (cid){
+    try {
+        const response = await fetch(`/api/carts/${cid}`, {
+        
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({user})
+        })
+        let responseData = await response.json();
+        console.log(responseData)  
+    } catch (error) {
+        console.log(error)
+    } 
 }
 
 
@@ -71,7 +104,9 @@ console.log(response)
         setEmptyCart,
         existCart,
         setExistCart,
-        addProductToCart
+        addProductToCart,
+        deleteProductFromCart,
+        deleteCart
     }
     return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 }

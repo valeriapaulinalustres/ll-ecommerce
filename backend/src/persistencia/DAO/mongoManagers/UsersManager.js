@@ -1,5 +1,5 @@
 import { userModel } from "../../mongodb/models/user.model.js";
-import { hashPassword, comparePasswords } from "../../../utils.js";
+import { hashPassword, comparePasswords, generateToken } from "../../../utils.js";
 import config from "../../../config.js";
 // import UsersDBDTO from '../../DTO/usersDB.dto.js'
 import UsersRepository from "../../repositories/users.repositories.js";
@@ -68,6 +68,13 @@ export default class UsersManager {
     if (usuario) {
       const isPassword = await comparePasswords(password, usuario[0].password);
       if (isPassword) {
+
+//----- Autenticación de usuarios ---
+const token = generateToken(user)
+console.log('token generado con éxito', token)
+ res.cookie('token', token, { httpOnly: true }).json({ token })
+
+
         return usuario;
       }
     } else {

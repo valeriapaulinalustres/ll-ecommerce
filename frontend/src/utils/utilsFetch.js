@@ -1,10 +1,10 @@
 import { errorFetchAlert, toastAlert } from "../utils/alerts";
 import { base_URL } from "./mainRoute";
 
-export const fetchFunction = async (endpoint, body) => {
+export const fetchFunction = async (endpoint, body, method='POST') => {
   try {
     const response = await fetch(`${base_URL}${endpoint}`, {
-      method: "POST",
+      method: method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });

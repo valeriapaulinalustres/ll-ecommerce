@@ -1,41 +1,36 @@
-import { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import UsersContext from '../../context/UsersContext';
-import {Link, useNavigate} from 'react-router-dom'
-import {BsCart4} from 'react-icons/bs'
-import CartContext from '../../context/CartContext';
-import styles from '../../styles/Header.module.css'
+import { useContext } from "react";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import UsersContext from "../../context/UsersContext";
+import { Link, useNavigate } from "react-router-dom";
+import { BsCart4 } from "react-icons/bs";
+import CartContext from "../../context/CartContext";
+import styles from "../../styles/Header.module.css";
+import {TbPlant} from 'react-icons/tb'
+import {MdOutlineAddCircle} from 'react-icons/md'
+import ProductsContext from "../../context/ProductsContext";
 
 function Header() {
+  const { login, existUser, setExistUser, logout, getCartById, user } =
+    useContext(UsersContext);
 
-  const {
-    login, 
-    existUser,
-    setExistUser,
-    logout,
-    getCartById,
-    user
-  } = useContext(UsersContext)
+    const {setProductToEdit} = useContext(ProductsContext)
 
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
-
-  function handleLogout () {
-    logout()
-    .then(()=>{
-      navigate('/')
-      setExistUser(false)
-    })
+  function handleLogout() {
+    logout().then(() => {
+      navigate("/");
+      setExistUser(false);
+    });
   }
 
-  function handleGetCart () {
- navigate('/cart')
-   
+  function handleGetCart() {
+    navigate("/cart");
   }
 
   return (
@@ -46,52 +41,54 @@ const navigate = useNavigate()
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
+            style={{ maxHeight: "100px" }}
             navbarScroll
           >
             <Nav.Link href="/">Home</Nav.Link>
             {/* <Nav.Link href="#action2">User</Nav.Link> */}
-            
+
             <NavDropdown title="Usuarios" id="navbarScrollingDropdown">
-              {
-              existUser
-              ? <>
-               <NavDropdown.Item  onClick={handleLogout}>Cerrar sesión</NavDropdown.Item>
-             
-              </>
-             
-              : <>
-              <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-              <NavDropdown.Item href="/register">
-                ¿No tenés cuenta? Registrate aquí
-              </NavDropdown.Item>
-              </>
-              
-              }
-           
-              
-              
+              {existUser ? (
+                <>
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Cerrar sesión
+                  </NavDropdown.Item>
+                </>
+              ) : (
+                <>
+                  <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                  <NavDropdown.Item href="/register">
+                    ¿No tenés cuenta? Registrate aquí
+                  </NavDropdown.Item>
+                </>
+              )}
+
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">
                 Something else here
               </NavDropdown.Item>
             </NavDropdown>
-           
           </Nav>
-          {
-            existUser &&
-           
+          {existUser && (
             <>
-                        <h3>Bienvenido {user.full_name}</h3>
-<BsCart4 onClick={handleGetCart} className={styles.cartIcon}/>
+              <h3>Bienvenido {user.full_name}</h3>
+              <BsCart4 onClick={handleGetCart} className={styles.cartIcon} />
             </>
-
-           
-            
-            
+          )
+          
           }
-        
-         
+          {
+            (user.role == 'admin' ||  user.role == 'premium') &&
+            <Link to='/add-product'>
+        <div onClick={()=>setProductToEdit(null)}>
+        <TbPlant className={styles.cartIcon}/>
+           <MdOutlineAddCircle className={styles.cartIcon}/>
+            </div>
+            </Link>
+    
+   
+          }
+
           <Form className="d-flex">
             <Form.Control
               type="search"
