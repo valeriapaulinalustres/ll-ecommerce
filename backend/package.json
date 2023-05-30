@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "mocha -t 10000 test/ProductManager.test.js"
+    "test": "mocha -t 10000 test/carts.router.test.js"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
