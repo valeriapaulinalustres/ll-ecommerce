@@ -27,4 +27,14 @@ describe("Probando rutas de carts", function () {
       response._body.message.products.find((el) => el.id === pid).id
     ).to.equal(pid);
   });
+
+  it("Probar método DELETE /api/carts/:cid", async function (){
+   const cid = '644dc67deeaea1a6917479b4'
+   
+       const response = await request.delete(`/api/carts/${cid}`).send({email:'valeriapaulinalustres@yahoo.com.ar'})
+   
+       expect(response.status).to.equal(200)
+         })
+   
+  
 });

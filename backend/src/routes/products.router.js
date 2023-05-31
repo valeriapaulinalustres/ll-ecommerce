@@ -61,7 +61,9 @@ updateProductController
 // }
 )
 
-router.delete('/:pid', verificarUsuarioPremiumOAdmin, deleteProductController
+router.delete('/:pid', 
+//verificarUsuarioPremiumOAdmin, 
+deleteProductController
 // async (req, res) => {
 //     const pid = req.params.pid
 //     const deletedProduct = await productManager.deleteProduct(pid)
