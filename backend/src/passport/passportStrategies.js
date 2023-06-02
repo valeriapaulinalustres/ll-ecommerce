@@ -161,14 +161,20 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user, done) => { //serialize sirve para guardar la info de usuario en una cookie
   console.log(user);
-  done(null, user._id);
+  done(null, user._id); //esto sirve para que cada vez que se ejecute el done, se guarde el user id en una cookie.Se recupera con req['user']
+//  done(null, {
+//   id: user["_id"],
+//   userName: user["full_name"],
+//   email: user["email"]
+// }); //esta es otra opción al req.user. Hay que probarla.
+
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id, done) => { //recibe el id de la cookie y la compara en mongo atlas
   const user = await userModel.findById(id);
-  done(null, user);
+  done(null, user); //al encontrar el usuario con esa id lo pasa a la próxima etapa
 });
 
 /*
