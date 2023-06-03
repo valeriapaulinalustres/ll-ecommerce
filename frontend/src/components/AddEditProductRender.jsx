@@ -50,39 +50,39 @@ console.log('edited', editedProduct)
             <input type="text" defaultValue={productToEdit?.thumbnails[2]} />
           </div>
           <div>
-            <input type="text" required defaultValue={productToEdit.title} />
+            <input type="text" required defaultValue={productToEdit?.title} />
             <input
               type="text"
               placeholder="Categoría"
               required
-              defaultValue={productToEdit.category}
+              defaultValue={productToEdit?.category}
             />
             <input
               type="text"
               placeholder="Código"
               required
-              defaultValue={productToEdit.code}
+              defaultValue={productToEdit?.code}
             />
             <input
               type="text"
               placeholder="Descripción"
               required
-              defaultValue={productToEdit.description}
+              defaultValue={productToEdit?.description}
             />
             <input
               type="number"
               placeholder="Precio"
               required
-              defaultValue={productToEdit.price}
+              defaultValue={productToEdit?.price}
             />
             <input
               type="number"
               placeholder="Stock"
               required
-              defaultValue={productToEdit.stock}
+              defaultValue={productToEdit?.stock}
             />
             Status:{" "}
-            <input type="checkbox" defaultChecked={productToEdit.status} />
+            <input type="checkbox" defaultChecked={productToEdit?.status} />
             <Button type="submit">Actualizar producto</Button>
             <Link to="/">
               <Button>Volver al Home</Button>
@@ -101,7 +101,7 @@ console.log('edited', editedProduct)
               type="text"
               placeholder="Título"
               required
-              defaultValue={productToEdit.title}
+              defaultValue={productToEdit?.title}
             />
             <input type="text" placeholder="Categoría" required />
             <input type="text" placeholder="Código" required />

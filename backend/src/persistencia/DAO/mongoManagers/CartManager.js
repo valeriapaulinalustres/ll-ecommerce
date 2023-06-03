@@ -210,7 +210,7 @@ export default class CartManager {
       await cart.save();
 
       logger.info('Carrito actualizado con éxito')
-      return { message: "Product deleted from cart successfully", cart };
+      return { message: "Product deleted from cart successfully", cart, status: 'success' };
     } catch (error) {
       logger.error("Error desde el manager", error);
       return error;
@@ -299,7 +299,7 @@ export default class CartManager {
 
       await cart.save();
       logger.info('Cantidad del producto actualizado con éxito')
-      return { message: "Quantity edited successfuly", product: cart };
+      return { message: "Quantity edited successfuly", product: cart , status: 'success'};
     } catch (error) {
       logger.error("Error desde el manager", error);
       return error;

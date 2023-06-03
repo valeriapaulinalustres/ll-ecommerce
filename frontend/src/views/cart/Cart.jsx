@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 import { TiPlusOutline } from "react-icons/ti";
 import { TiMinusOutline } from "react-icons/ti";
 import Button from "react-bootstrap/Button";
+import { toastAlert } from "../../utils/alerts";
 
 function Cart() {
-  const { cart, getCartById, addProductToCart, deleteProductFromCart, deleteCart } =
+  const { cart, getCartById, addProductToCart, deleteProductFromCart, deleteCart, editProductQty } =
     useContext(CartContext);
   const { user } = useContext(UsersContext);
 
@@ -27,11 +28,13 @@ function Cart() {
 
   function handleDeleteProduct(pid) {
     console.log("delete");
-    deleteProductFromCart(user.cartId, pid);
+    deleteProductFromCart(user.cartId, pid).then(() =>
+    getCartById(user.cartId))
   }
 
   function handleDeleteCart(){
-    deleteCart(user.cartId)
+    deleteCart(user.cartId).then(() =>
+    getCartById(user.cartId))
   }
 
 
@@ -44,6 +47,23 @@ cart?.message?.products?.forEach(el=>{
    
 
   })
+
+  function handleChangeQty (e, pid) {
+  
+if( e.target.value ==""){
+  return toastAlert('warning', 'Complete una cantidad a comprar por favor');
+  }
+
+  if( e.target.value < 1){
+    return toastAlert('error', 'Debe ingresar valores mayores o iguales a 1');
+    }
+  
+let qty = e.target.value;
+let cid = user.cartId;
+
+   editProductQty(cid,pid, qty).then(() =>
+    getCartById(user.cartId))
+  }
 
   console.log('user', user)
 
@@ -82,7 +102,14 @@ cart?.message?.products?.forEach(el=>{
                           <TiMinusOutline />
                         </Button>
 
-                        <div className="border">{el.quantity}</div>
+                        {/* <div className="border">{el.quantity}</div> */}
+                        <input 
+                        type='number' 
+                        defaultValue={el.quantity} 
+                        onChange={(e)=>handleChangeQty(e, el.id._id)}
+                        min='1'
+                        />
+
                         <Button onClick={() => handleAddProduct(el.id._id)}>
                           <TiPlusOutline />
                         </Button>

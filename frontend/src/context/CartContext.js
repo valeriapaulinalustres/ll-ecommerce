@@ -55,33 +55,25 @@ async function getCartById (cid) {
 
 //Agrega un producto a un carrito
 async function addProductToCart (pid, cid, user) {
-    console.log(pid, cid)
-    const response = await fetchFunction(`/api/carts/${cid}/product/${pid}`,{
-        user
-    })
-console.log(response)
-}
-
-//Elimina un producto del carrito NO FUNCIONA
-async function deleteProductFromCart (cid,pid){
     try {
-        const response = await fetch(`/api/carts/${cid}/product/${pid}`, {
-        
-            method: 'DELETE',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({user})
+        console.log(pid, cid)
+        const response = await fetchFunction(`/api/carts/${cid}/product/${pid}`,{
+            user
         })
-        let responseData = await response.json();
-        console.log(responseData)  
+    console.log(response)
+    if (response.status === 'success') { return toastAlert('success', 'Producto agregado con éxito')} else {
+        return toastAlert('error', 'No se ha podido agregar el producto')
+    }
     } catch (error) {
         console.log(error)
     }
 
 }
 
-async function deleteCart (cid){
+//Elimina un producto del carrito 
+async function deleteProductFromCart (cid,pid){
     try {
-        const response = await fetch(`/api/carts/${cid}`, {
+        const response = await fetch(`${base_URL}/api/carts/${cid}/product/${pid}`, {
         
             method: 'DELETE',
             headers: { "Content-Type": "application/json" },
@@ -89,9 +81,48 @@ async function deleteCart (cid){
         })
         let responseData = await response.json();
         console.log(responseData)  
+        if (responseData.message.status === 'success') { return toastAlert('success', 'Producto eliminado con éxito')} else {
+            return toastAlert('error', 'No se ha podido eliminar el producto')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+//Vacía el carrito
+async function deleteCart (cid){
+    try {
+        const response = await fetch(`${base_URL}/api/carts/${cid}`, {
+        
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({user})
+        })
+        let responseData = await response.json();
+        console.log(responseData)  
+        if (responseData.status === 'success') {
+             return toastAlert('success', 'Carrito vaciado con éxito')} else {
+            return toastAlert('error', 'No se ha podido vaciar el carrito')
+        }
     } catch (error) {
         console.log(error)
     } 
+}
+
+//Edita cantidad de un producto
+async function editProductQty (cid,pid,qty) {
+const response = await fetch(`${base_URL}/api/carts/${cid}/product/${pid}/${qty}`,{
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({user})
+})
+let responseData = await response.json()
+console.log(responseData)
+if (responseData.message.status === 'success') {
+    return toastAlert('success', 'Cantidad editada con éxito')} else {
+   return toastAlert('error', 'No se ha podido editar la cantidad')
+}
 }
 
 
@@ -106,7 +137,8 @@ async function deleteCart (cid){
         setExistCart,
         addProductToCart,
         deleteProductFromCart,
-        deleteCart
+        deleteCart,
+        editProductQty
     }
     return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 }

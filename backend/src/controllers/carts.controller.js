@@ -48,7 +48,9 @@ export const addProductToCartController = async (req, res) => {
     const owner = req.body.user;
     const addedProduct = await addProductToCartService(cid, pid, owner);
     res.json({
-      message: addedProduct,
+      message: 'Product added successfully',
+      product: addedProduct,
+      status: 'success'
     });
   } catch (error) {
     console.log("Error desde el controller: ", error);
@@ -72,7 +74,7 @@ export const emptyCartController = async (req, res) => {
   try {
     const cid = req.params.cid;
     const emptyCart = await emptyCartService(cid);
-    res.json({ message: emptyCart });
+    res.json({ message: 'Cart emptied successfully', cart: emptyCart, status: 'success' });
   } catch (error) {
     console.log("Error desde el controller: ", error);
   }
