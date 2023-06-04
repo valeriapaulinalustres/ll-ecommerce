@@ -464,4 +464,55 @@ export default class CartManager {
       return error;
     }
   }
+
+
+  async eraseProductFromCart(cid, pid) {
+    try {
+      if (cid.length != 24 || pid.length != 24) {
+        CustomError.createCustomError({
+          name: ErrorsName.CART_DATA_INCORRECT_ID,
+          cause: ErrorsCause.CART_DATA_INCORRECT_ID,
+          message: ErrorsMessage.CART_DATA_INCORRECT_ID,
+        });
+        return;
+      }
+
+      const cart = await cartsModel.findOne({ _id: cid });
+      if (!cart) {
+        CustomError.createCustomError({
+          name: ErrorsName.CART_DATA_NOT_FOUND_IN_DATABASE,
+          cause: ErrorsCause.CART_DATA_NOT_FOUND_IN_DATABASE,
+          message: ErrorsMessage.CART_DATA_NOT_FOUND_IN_DATABASE,
+        });
+        logger.warn('Carrito no encontrado en la base de datos')
+        return;
+      }
+
+      const existsProduct = await productsModel.findById(pid);
+      if (!existsProduct) {
+        CustomError.createCustomError({
+          name: ErrorsName.PRODUCT_DATA_NOT_FOUND_IN_DATABASE,
+          cause: ErrorsCause.PRODUCT_DATA_NOT_FOUND_IN_DATABASE,
+          message: ErrorsMessage.PRODUCT_DATA_NOT_FOUND_IN_DATABASE,
+        });
+        logger.warn('Producto no encontrado en la base de datos')
+        return;
+      }
+
+      const result = await productsModel.findByIdAndDelete(pid)
+
+
+     // await cart.save();
+
+      logger.info('Producto eliminado del carrito con éxito')
+      return { message: "Product deleted from cart successfully", result, status: 'success' };
+    } catch (error) {
+      logger.error("Error desde el manager", error);
+      return error;
+    }
+  }
+
+
+
+
 }

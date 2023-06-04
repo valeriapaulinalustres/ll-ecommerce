@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login () {
 
+
 const {
   login, 
   existUser,
@@ -37,6 +38,10 @@ const navigate = useNavigate()
       const github = () => {
         window.open("http://localhost:8080/api/users/registroGithub", "_self");
       }    
+
+      function handleLoginGithub () {
+        registroGithub()
+      }
 
     return (
 <Container >
@@ -80,7 +85,7 @@ const navigate = useNavigate()
 }
 <Row>
   <Col md='auto'>
-  <Button>Ingresar con GitHub</Button>
+  <Button onClick={handleLoginGithub}>Ingresar con GitHub</Button>
   </Col>
 <Col md='auto'>
 <Button>Ingresar con Google</Button>

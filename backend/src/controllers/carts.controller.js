@@ -8,6 +8,7 @@ import {
   editProductQtyService,
   editCartService,
   completeSaleService,
+  eraseProductFromCartService
 } from "../services/carts.services.js";
 
 export const addCartController = async (req, res) => {
@@ -111,6 +112,21 @@ export const completeSaleController = async (req, res) => {
     // algo.ticket = {...algo.ticket, purchaser: req.cookies.user.user.email}
 
     res.json({ message: resultCart });
+  } catch (error) {
+    console.log("Error desde el controller: ", error);
+  }
+};
+
+
+export const eraseProductFromCartController = async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+
+    const deletedProduct = await eraseProductFromCartService(cid, pid);
+    res.json({
+      message: deletedProduct,
+    });
   } catch (error) {
     console.log("Error desde el controller: ", error);
   }

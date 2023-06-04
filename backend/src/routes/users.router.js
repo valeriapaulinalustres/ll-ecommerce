@@ -153,10 +153,10 @@ router.get(
 )
 
 
-router.get('/github', passport.authenticate('github'),(req,res)=>{
+router.get('/github/callback', passport.authenticate('github'),(req,res)=>{
   req.session.email = req.user.email
-
- // res.redirect('http://localhost:3000/products')
+console.log(req.user)
+  res.redirect(`http://localhost:3000`)
 })
 
 //--- obtener datos del usuario ---

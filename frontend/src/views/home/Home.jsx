@@ -6,6 +6,7 @@ import Container from "react-bootstrap/esm/Container.js";
 import ProductCard from "../../components/productCard.jsx";
 import ProductsContext from "../../context/ProductsContext.js";
 import Row from "react-bootstrap/Row";
+import PaginationComponent from "../../components/PaginationComponent.jsx";
 
 function Home() {
   const { allProductsFromBack, getProducts } = useContext(ProductsContext);
@@ -24,6 +25,7 @@ function Home() {
           return <ProductCard key={index} product={el} />;
         })}
       </Row>
+  <PaginationComponent />
     </Container>
   );
 }

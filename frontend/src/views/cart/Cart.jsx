@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import { toastAlert } from "../../utils/alerts";
 
 function Cart() {
-  const { cart, getCartById, addProductToCart, deleteProductFromCart, deleteCart, editProductQty } =
+  const { cart, getCartById, addProductToCart, deleteProductFromCart, deleteCart, editProductQty, eraseProductFromCart } =
     useContext(CartContext);
   const { user } = useContext(UsersContext);
 
@@ -65,6 +65,14 @@ let cid = user.cartId;
     getCartById(user.cartId))
   }
 
+  function handleDeleteProduct (e, pid){
+    
+    let cid = user.cartId
+
+    eraseProductFromCart(cid,pid).then(() =>
+    getCartById(user.cartId))
+  }
+
   console.log('user', user)
 
   return (
@@ -116,7 +124,7 @@ let cid = user.cartId;
                       </div>
                       <div className="col">
                         ${el.id.price} x {el.quantity} = ${el.id.price * el.quantity}
-                        <span className="close">&#10005;</span>
+                        <span className="close" onClick={(e)=>handleDeleteProduct(e, el.id._id)}>&#10005;</span>
                       </div>
                     </div>
                   </div>

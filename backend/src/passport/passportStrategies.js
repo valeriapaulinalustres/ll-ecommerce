@@ -136,7 +136,7 @@ passport.use(
     {
       clientID: "Iv1.672fec06309dff3d",
       clientSecret: "3ba2e70390df01fa7eb49cef3fbbe434b07ffefc",
-      callbackURL: "/api/users/github/callback",
+      callbackURL: "http://localhost:8080/api/users/github/callback",
     },
    async function (accessToken, refreshToken, profile, done) {
     const user = await userModel.findOne({ email: profile._json.email });

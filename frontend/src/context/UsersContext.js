@@ -60,6 +60,10 @@ async function registro (newUser) {
     first_name, last_name, email, age, password
   })
 
+  /*
+  Access to fetch at 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fusers%2Fgithub%2Fcallback&scope=user%3Aemail&client_id=Iv1.672fec06309dff3d' (redirected from 'http://localhost:8080/api/users/registroGithub') from origin 'http://localhost:3000' has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header has a value 'http://localhost:3000' that is not equal to the supplied origin. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+  */
+
 
   response.success
   ? toastAlert('success', response.message)
@@ -68,7 +72,7 @@ async function registro (newUser) {
 
 //registro con GitHub
   async function registroGithub () {
-    const response = await fetch(`${base_URL}/api/users/registroGithub`)
+    const response = await fetch(`http://localhost:8080/api/users/registroGithub`)
     let responseData = await response.json();
     console.log(responseData);
   }
@@ -118,6 +122,8 @@ async function registro (newUser) {
     console.log('error');
   }
  }
+
+
 
   const data = {
     login,

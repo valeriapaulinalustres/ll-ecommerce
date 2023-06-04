@@ -125,6 +125,26 @@ if (responseData.message.status === 'success') {
 }
 }
 
+//Elimina un producto del carrito, a través de la cruz
+async function eraseProductFromCart (cid,pid){
+    try {
+        const response = await fetch(`${base_URL}/api/carts/${cid}/product/${pid}/erase`, {
+        
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({user})
+        })
+        let responseData = await response.json();
+        console.log(responseData)  
+        if (responseData.message.status === 'success') { return toastAlert('success', 'Producto eliminado con éxito')} else {
+            return toastAlert('error', 'No se ha podido eliminar el producto')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 
     const data = {
         getCartById,
@@ -138,7 +158,8 @@ if (responseData.message.status === 'success') {
         addProductToCart,
         deleteProductFromCart,
         deleteCart,
-        editProductQty
+        editProductQty,
+        eraseProductFromCart
     }
     return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 }
