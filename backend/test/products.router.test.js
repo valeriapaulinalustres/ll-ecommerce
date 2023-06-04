@@ -1,5 +1,6 @@
 import supertest from "supertest";
 import { expect } from "chai";
+import { faker } from '@faker-js/faker'
 
 const request = supertest("http://localhost:8080");
 
@@ -11,7 +12,7 @@ const newProduct = {
   price: 300,
   thumbnails: [],
   status: true,
-  code: "cal3",
+  code: faker.string.alphanumeric(5),
   owner: "LucasAdmin",
 };
 
