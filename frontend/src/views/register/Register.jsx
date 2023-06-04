@@ -9,7 +9,7 @@ import UsersContext from '../../context/UsersContext';
 
 function Register() {
 
-    const {registro, registroGithub} = useContext(UsersContext)
+    const {registro, registroGithub, registroGoogle} = useContext(UsersContext)
 
 function handleSubmitRegister (e) {
     e.preventDefault()
@@ -38,8 +38,12 @@ const newUser = {
         registro(newUser)
 }
 
-function handleLoginGithub() {
+function handleRegisterGithub() {
   registroGithub()
+}
+
+function handleRegisterGoogle() {
+  registroGoogle()
 }
 
   return (
@@ -90,10 +94,10 @@ function handleLoginGithub() {
     </Form>
 <Row>
     <Col>
-    <Button onClick={handleLoginGithub}>Registrarme con GitHub</Button>
+    <Button onClick={handleRegisterGithub}>Registrarme con GitHub</Button>
     </Col>
     <Col>
-    <Button>Registrarme con Google</Button>
+    <Button onClick={handleRegisterGoogle}>Registrarme con Google</Button>
     </Col>
 </Row>
    

@@ -21,7 +21,9 @@ const {
   loginError, 
   setLoginError,
   getCurrentUser,
-  getCurrentUserFromMail
+  getCurrentUserFromMail,
+  registroGoogle
+
 } = useContext(UsersContext)
 
 const navigate = useNavigate()
@@ -41,6 +43,10 @@ const navigate = useNavigate()
 
       function handleLoginGithub () {
         registroGithub()
+      }
+
+      function handleLoginGoogle () {
+        registroGoogle()
       }
 
     return (
@@ -87,14 +93,16 @@ const navigate = useNavigate()
   <Col md='auto'>
   <Button onClick={handleLoginGithub}>Ingresar con GitHub</Button>
   </Col>
-<Col md='auto'>
-<Button>Ingresar con Google</Button>
-</Col>
+  <Col md='auto'>
+  <Button onClick={handleLoginGoogle}>Ingresar con Google</Button>
+  </Col>
+
 
 </Row>
 
 
     </Form>
+ 
 <p>¿No tenés una cuenta? </p>
 <Button>Crear cuenta</Button>
 

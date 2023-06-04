@@ -53,7 +53,15 @@ function handleEditProduct (){
   
   navigate('/edit-product')
 }
+
+function handleDeleteProduct (id){
+console.log(id)
+//deleteProduct(id)
+}
+
 console.log('product to edit',productToEdit)
+
+
 
   return (
     <div className={styles.productContainer}>
@@ -75,7 +83,7 @@ console.log('product to edit',productToEdit)
           <TfiPencil onClick={handleEditProduct} />
         </Button>
         <Button>
-          <RiDeleteBin6Line />
+          <RiDeleteBin6Line onClick={()=>handleDeleteProduct(_id)}/>
         </Button>
         </div>
 }

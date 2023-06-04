@@ -77,6 +77,13 @@ async function registro (newUser) {
     console.log(responseData);
   }
 
+  //registro con Google
+  async function registroGoogle () {
+    const response = await fetch(`http://localhost:8080/api/users/registroGoogle`)
+    let responseData = await response.json();
+    console.log(responseData);
+  }
+
  //cerrar cesión de usuario
  async function logout (){
   const response = await fetch(`${base_URL}/api/users/logout`)
@@ -139,7 +146,8 @@ async function registro (newUser) {
     getCurrentUserFromMail,
     user,
     setUser,
-    addCartToUser
+    addCartToUser,
+    registroGoogle
   };
 
   return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;
