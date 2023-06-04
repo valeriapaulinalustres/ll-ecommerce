@@ -63,7 +63,7 @@ try {
     })
     const rep = await resp.json()
     console.log(rep)
-    if (rep.response){
+    if (rep.response.status === 'success'){
         toastAlert('success', 'Producto actualizado con éxito')
     } else {
         toastAlert('error', 'Error al actualizar el producto')
@@ -72,6 +72,31 @@ try {
     console.log(error);
 }
     }
+
+    //Borrar productos
+    async function deleteProduct(id, owner){
+      console.log(owner);
+        try {
+           
+            const resp = await fetch(`${base_URL}/api/products/${id}`, {
+                method: 'DELETE',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify({
+               
+                    owner: owner
+                })
+            })
+            const rep = await resp.json()
+            console.log(rep)
+            if (rep.response.status === 'success'){
+                toastAlert('success', 'Producto eliminado con éxito')
+            } else {
+                toastAlert('error', 'Error al eliminar el producto')
+            } 
+        } catch (error) {
+            console.log(error);
+        }
+            }
    
     
 
@@ -86,7 +111,8 @@ try {
         addProduct,
         editProduct,
         productToEdit, 
-        setProductToEdit
+        setProductToEdit,
+        deleteProduct
 
     }
 

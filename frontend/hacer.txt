@@ -1,21 +1,15 @@
-no funciona login con Github
-
-al login, redirigir al perfil de usuario
+no funciona login con Github ni con Google por cors desde esas webs. Si funciona desde SSR
 
 
-Carrito: está completo. Si se quiere, agregar lo del costo por traslado
+* Carrito: está completo. Si se quiere, agregar lo del costo por traslado
 
-Usuario: 
+* Usuario: 
 
-Se mantiene en sesión excepto cuando hace click en home
 JWT funciona pero no aparece en cookies el token. Ya aparece en el testing
 
 NO ANDA EL REQ.USER, CON LO CUAL TUVE QUE COMENTAR EN PRODUCT.ROUTER EL MIDDLEWARE DE ADD PRODUCT QUE VERIFICA ROL DE USUARIO
 
-Productos
-Sólo falta ruta de eliminar
-
 Ver qué usuarios tienen permiso para cada cosa y darles desde el front (admin y premium)
 
-Home:
+* Home:
 falta la paginación para que muestre todos los productos

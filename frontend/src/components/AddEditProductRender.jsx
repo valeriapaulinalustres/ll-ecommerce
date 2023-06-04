@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import styles from "../styles/Product.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import ProductsContext from "../context/ProductsContext";
 import UsersContext from "../context/UsersContext";
@@ -9,6 +9,8 @@ function AddEditProductRender({ handleAddProduct,  }) {
   const { productToEdit, editProduct } = useContext(ProductsContext);
   const {user} = useContext(UsersContext)
   console.log(productToEdit);
+
+const navigate = useNavigate()
 
 function handleEditProduct(e){
   e.preventDefault()
@@ -37,7 +39,7 @@ function handleEditProduct(e){
       e.target[i].value = "";
     }
 console.log('edited', editedProduct)
- editProduct(productToEdit.id, editedProduct, user)
+ editProduct(productToEdit.id, editedProduct, user).then(()=>navigate('/'))
 }
 
   return (

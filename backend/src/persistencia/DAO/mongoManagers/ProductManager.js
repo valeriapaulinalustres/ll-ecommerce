@@ -184,7 +184,7 @@ export default class ProductManager {
       }
 
       logger.info("Producto eliminado con éxito");
-      return { message: "Producto eliminado con éxito", deletedProduct };
+      return { message: "Producto eliminado con éxito", deletedProduct, status: 'success' };
     } catch (error) {
       logger.error("Error desde el manager", error);
       return error;
@@ -257,7 +257,7 @@ console.log(product) //array, lo trae bien
       );
       logger.info("Producto actualizado con éxito");
       console.log(updatedProduct)
-      return updatedProduct;
+      return { message: "Producto actualizado con éxito", updatedProduct, status: 'success' };
     } catch (error) {
       logger.error("Error desde el manager", error);
       return error;

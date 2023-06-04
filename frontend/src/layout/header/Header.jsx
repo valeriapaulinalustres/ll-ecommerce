@@ -44,7 +44,7 @@ function Header() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/">Home</Nav.Link>
+            <Link to='/'>Home</Link>
             {/* <Nav.Link href="#action2">User</Nav.Link> */}
 
             <NavDropdown title="Usuarios" id="navbarScrollingDropdown">

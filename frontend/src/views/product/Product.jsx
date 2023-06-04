@@ -13,8 +13,12 @@ import styles from '../../styles/Product.module.css'
 
 function Product() {
 
-    const {productById,    productToEdit, 
-      setProductToEdit} = useContext(ProductsContext)
+    const {
+      productById,   
+       productToEdit, 
+      setProductToEdit, 
+      deleteProduct
+    } = useContext(ProductsContext)
 const {existUser, user} = useContext(UsersContext)
 const {
   emptyCart, 
@@ -56,7 +60,7 @@ function handleEditProduct (){
 
 function handleDeleteProduct (id){
 console.log(id)
-//deleteProduct(id)
+deleteProduct(id, user).then(()=>navigate('/'))
 }
 
 console.log('product to edit',productToEdit)

@@ -67,7 +67,7 @@ export const updateProductController = async (req, res) => {
     const owner = req.body.owner;
     const updatedProductFromDb = await updateProductService(pid, updatedProduct,owner);
     res.json({
-      reponse: updatedProductFromDb,
+      response: updatedProductFromDb,
     });
   } catch (error) {
     console.log("Error desde el controller: ", error);
@@ -75,10 +75,10 @@ export const updateProductController = async (req, res) => {
 };
 
 export const deleteProductController = async (req, res) => {
-  console.log('pasa')
+
   try {
     const pid = req.params.pid;
-    let owner = req.body;
+    let owner = req.body.owner;
     const deletedProduct = await deleteProductService(pid, owner);
     res.json({
       response: deletedProduct,
