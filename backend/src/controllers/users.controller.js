@@ -113,10 +113,28 @@ try {
 
 export const uploadFilesController = async (req,res) => {
   const userId = req.params.uid
-  const documents = req.files
-console.log(documents)
+  const documents = req.files //en req.files se guarda lo subido por multer
+
+  let documentsUploaded = []
+
+  if(documents?.profile) {documents.profile.forEach(el=>{
+    documentsUploaded.push({name: el.filename, reference: el.path})
+  })}
+  
+if(documents?.product)   documents.product.forEach(el=>{
+  documentsUploaded.push({name: el.filename, reference: el.path})
+})
+
+if(documents?.documents) { documents.document.forEach(el=>{
+  documentsUploaded.push({name: el.filename, reference: el.path})
+})}
+ 
+
+ // console.log('uploaded', documentsUploaded)
+
+
 try {
-  const user = await uploadFilesService(userId, documents)
+  const user = await uploadFilesService(userId, documentsUploaded)
   console.log(user)
   res.json({ message: 'Documents uploaded successfully' });
 } catch (error) {

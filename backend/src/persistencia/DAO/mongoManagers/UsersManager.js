@@ -245,7 +245,28 @@ async addCartToUser (uid, cid){
 }
 
 async uploadFiles (uid, docs) {
+  console.log(uid)
   console.log(docs)
+
+ try {
+   const updatedUser = await userModel.findByIdAndUpdate( 
+    uid,
+    {
+    documents: docs
+    } ,
+    { new: true }
+    
+    );
+
+  
+     return updatedUser;
+  
+   
+ } catch (error) {
+   logger.error("Error", error);
+   throw new Error(error);
+ }
+
 }
 
 }
