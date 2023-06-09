@@ -36,3 +36,7 @@ export async function changeRol (userId) {
 export async function addCartToUser(uid, cid) {
     return await persistence.addCartToUser(uid,cid)
 }
+
+export async function uploadFiles(uid, docs) {
+    return await persistence.uploadFiles(uid,docs)
+}

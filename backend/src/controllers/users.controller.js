@@ -6,7 +6,8 @@ import {
   createNewPasswordServices,
   changeRolServices,
   getUserDataFromMailService,
-  addCartToUserService
+  addCartToUserService,
+  uploadFilesService
 } from "../services/users.services.js";
 
 export const logoutController = (req, res) => {
@@ -103,6 +104,21 @@ try {
   const user = await addCartToUserService(userId, cartId)
   console.log(user)
   res.json({ message: 'User update successfully' });
+} catch (error) {
+  console.log("error");
+}
+
+  
+}
+
+export const uploadFilesController = async (req,res) => {
+  const userId = req.params.uid
+  const documents = req.files
+console.log(documents)
+try {
+  const user = await uploadFilesService(userId, documents)
+  console.log(user)
+  res.json({ message: 'Documents uploaded successfully' });
 } catch (error) {
   console.log("error");
 }

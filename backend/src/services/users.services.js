@@ -6,7 +6,8 @@ import {
    createNewPassword,
    changeRol,
    getUserDataFromMail,
-   addCartToUser
+   addCartToUser,
+   uploadFiles
 } from '../persistencia/usersPersistence.js'
 import UsersRepository from '../persistencia/repositories/users.repositories.js'
 
@@ -54,3 +55,8 @@ export async function addCartToUserService(uid, cid) {
     return user
 }
 
+
+export async function uploadFilesService(uid, docs) {
+    const user = await uploadFiles(uid, docs)
+    return user
+}

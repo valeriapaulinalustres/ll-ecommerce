@@ -10,9 +10,11 @@ import {
   changeRolController,
   getUserDataFromMailController,
   addCartToUserController,
+  uploadFilesController
 } from "../controllers/users.controller.js";
 import { generateToken } from "../utils.js";
 import logger from "../utils/winston.js";
+import { upload } from "../middlewares/multer.js";
 
 const CLIENT_URL = "https://localhost:3000/";
 
@@ -125,6 +127,14 @@ router.post("/create-new-password/:userId/:token", createNewPasswordController);
 router.put("/premium/:uid", changeRolController);
 
 router.put("/add-cart-to-user", addCartToUserController);
+
+const cpUpload = upload.fields(
+  [
+    { name: 'profile', maxCount: 1 }, 
+    { name: 'product', maxCount: 3 }, 
+    { name: 'document', maxCount: 3 }
+  ])
+router.post('/:uid/documents', cpUpload,  uploadFilesController)
 
 export default router;
 

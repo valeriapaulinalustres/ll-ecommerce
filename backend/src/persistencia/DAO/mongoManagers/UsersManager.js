@@ -244,4 +244,10 @@ async addCartToUser (uid, cid){
   }
 }
 
+async uploadFiles (uid, docs) {
+  console.log(docs)
 }
+
+}
+
+

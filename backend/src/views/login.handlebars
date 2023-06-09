@@ -9,3 +9,10 @@
 
 <h2>USUARIO NUEVO?</h2>
 <button onclick="location.href='/api/views/registro'">Ir a registro</button>
+
+<form action='/api/users/123/documents' method="post" enctype="multipart/form-data">
+  <input type="file" name="profile" value="profilePhoto"/>
+  <input type="file" name="product" value="Img de producto"/>
+  <input type="file" name="document" value="document"/>
+   <input type="submit" value="Submit"> 
+</form>
