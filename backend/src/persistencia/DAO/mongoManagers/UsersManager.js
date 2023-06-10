@@ -49,6 +49,7 @@ export default class UsersManager {
   }
 
   async loginUser(user) {
+    //esta ruta ya no está en uso porque se usa la estrategia de passport??
     if (!user) {
       CustomError.createCustomError({
         name: ErrorsName.PRODUCT_DATA_INCOMPLETE,
@@ -190,21 +191,20 @@ console.log('token generado con éxito', token)
         });
       }
 
+      let newUser;
 
-      if (user[0].role === "admin") {
-        await userModel.findByIdAndUpdate(
+      if (user[0].role === "admin" && user[0].documents.length >0) {
+        newUser = await userModel.findByIdAndUpdate(
           { _id: userId },
           { role: 'premium' }
         );
-       
-      } else if (user[0].role === "premium") {
-        await userModel.findByIdAndUpdate(
-          { _id: userId },
-          { role: 'admin' }
-        );
+        logger.info('Rol cambiado con éxito')
+      } else {
+        logger.error('El usuario no ha cargado documentación. No puede cambiar a premium.')
       }
-      logger.info('Rol cambiado con éxito')
-      return user
+
+     
+      return newUser
     } catch (error) {
       logger.error("Error", error);
     }
@@ -267,6 +267,46 @@ async uploadFiles (uid, docs) {
    throw new Error(error);
  }
 
+}
+
+
+async  login (user, time) {
+try {
+  const updatedUser = await userModel.findByIdAndUpdate( 
+    user._id,
+    {
+      lastConnection: time
+    } ,
+    { new: true }
+    
+    );
+  
+     return updatedUser;  
+} catch (error) {
+  logger.error("Error", error);
+  throw new Error(error);
+}
+}
+
+async  logout (user, time) {
+  console.log('user del manager logout', user)
+  logger.info('del manager logout user y time', user, time)
+try {
+  const updatedUser = await userModel.findByIdAndUpdate( 
+    user._id,
+    {
+      lastConnection: time
+    } ,
+    { new: true }
+    
+    );
+console.log('del manager updatedUser', updatedUser)
+  
+     return updatedUser;  
+} catch (error) {
+  logger.error("Error", error);
+  throw new Error(error);
+}
 }
 
 }

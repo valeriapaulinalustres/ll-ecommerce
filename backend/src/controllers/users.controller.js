@@ -7,19 +7,26 @@ import {
   changeRolServices,
   getUserDataFromMailService,
   addCartToUserService,
-  uploadFilesService
+  uploadFilesService,
+  logoutService
 } from "../services/users.services.js";
 
-export const logoutController = (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      console.log(error);
-      res.json({ message: error });
-    } else {
-      res.redirect("/api/views/login");
-    }
-  });
-};
+import { generateToken } from "../utils.js";
+import logger from "../utils/winston.js";
+import UsersManager from "../persistencia/DAO/mongoManagers/UsersManager.js";
+const usersManager = new UsersManager();
+
+
+// export const logoutController = (req, res) => {
+//   req.session.destroy((error) => {
+//     if (error) {
+//       console.log(error);
+//       res.json({ message: error });
+//     } else {
+//       res.redirect("/api/views/login");
+//     }
+//   });
+// };
 
 export const getUsersDataController = async (req, res) => {
   try {
@@ -86,9 +93,14 @@ export const createNewPasswordController = async (req, res) => {
 export const changeRolController = async (req,res) => {
   const userId = req.params.uid
 try {
-  const user = await changeRolServices(userId)
-  console.log(user)
-  res.json({ message: 'Role update successfully' });
+  const response = await changeRolServices(userId)
+  console.log(response)
+  if (response) {
+    res.json({ message: 'Role update successfully', user: response });
+  } else {
+res.json({message: 'Could not change rol. User must upload documentation.'})
+  }
+ 
 } catch (error) {
   console.log("error");
 }
@@ -139,7 +151,66 @@ try {
   res.json({ message: 'Documents uploaded successfully' });
 } catch (error) {
   console.log("error");
+}}
+
+
+export const loginSuccessController = async (req, res) =>{
+  console.log("aca", req.user); //funciona
+
+try {
+      //----- Autenticación de usuarios ---
+      const token = generateToken(req.user);
+      logger.info("token generado con éxito", token); //funciona
+      console.log("token generado con éxito", token); //aparece la cookie en navegador
+
+      res
+        .cookie("token", token, { httpOnly: true })
+        .json({
+          existUser: true,
+          message: "Login realizado con éxito",
+          user: req.user,
+          token,
+        
+        })
+        .send(req.session.sessionID);
+      // res.json({existUser: true, message:'Login realizado con éxito', user:req.user})
+} catch (error) {
+  console.log("error del loginSuccessController", error);
+}
 }
 
+export const loginController = async (req,res)=>{
+
+try {
+    console.log("aqui", req.user); //no funciona
+  res
+  .json({responseTime: response})
+    .cookie("cookie-prueba", "vale")
+    .redirect("/api/users/login/success", req.user) //cookie vale no funciona
+ 
+// } //le manda a la ruta success el usuario
+} catch (error) {
+ console.log('error ruta loginController', error) 
+}
+}
+
+export const logoutController = async (req, res) =>{
+
+    req.session.destroy(async (error) => {
+      if (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error en el logout" });
+      } else {
+        //res.redirect('api/views/login')
+        // const time = new Date();
+        // const response = await logoutService(req.user, time)
+        res.json({ success: true, message: "Logout realizado con éxito" });
+      }
+    });
   
 }
+
+
+
+
+

@@ -10,7 +10,10 @@ import {
   changeRolController,
   getUserDataFromMailController,
   addCartToUserController,
-  uploadFilesController
+  uploadFilesController,
+  loginSuccessController,
+  loginController,
+  logoutController,
 } from "../controllers/users.controller.js";
 import { generateToken } from "../utils.js";
 import logger from "../utils/winston.js";
@@ -45,48 +48,17 @@ router.post(
     passReqToCallback: true,
     session: true,
   }),
-  function (req, res) {
-    console.log("aqui", req.user); //no funciona
-    res
-      .cookie("cookie-prueba", "vale")
-      .redirect("/api/users/login/success", req.user); //cookie vale no funciona
-  } //le manda a la ruta success el usuario
+  loginController
 );
 
-router.get("/login/success", async (req, res) => {
-  console.log("aca", req.user); //funciona
-  //----- Autenticación de usuarios ---
-  const token = generateToken(req.user);
-  logger.info("token generaldo con éxito", token); //funciona
-  console.log("token generado con éxito", token); //aparece la cookie en navegador
-  res
-    .cookie("token", token, { httpOnly: true })
-    .json({
-      existUser: true,
-      message: "Login realizado con éxito",
-      user: req.user,
-      token,
-    })
-    .send(req.session.sessionID);
-  // res.json({existUser: true, message:'Login realizado con éxito', user:req.user})
-});
+router.get("/login/success", loginSuccessController);
 
 router.get("/login/error", async (req, res) => {
   res.json({ existUser: false, message: "Usuario o contraseña incorrectos" });
 });
 
 // *** Logout ***
-router.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      console.log(error);
-      res.json({ success: false, message: "Error en el logout" });
-    } else {
-      //res.redirect('api/views/login')
-      res.json({ success: true, message: "Logout realizado con éxito" });
-    }
-  });
-});
+router.get("/logout", logoutController);
 
 // *** Registro con Github ***
 router.get(
@@ -126,15 +98,16 @@ router.post("/create-new-password/:userId/:token", createNewPasswordController);
 
 router.put("/premium/:uid", changeRolController);
 
+// --- Agregar el id del carrito a su usuario ---
 router.put("/add-cart-to-user", addCartToUserController);
 
-const cpUpload = upload.fields(
-  [
-    { name: 'profile', maxCount: 1 }, 
-    { name: 'product', maxCount: 3 }, 
-    { name: 'document', maxCount: 3 }
-  ])
-router.post('/:uid/documents', cpUpload,  uploadFilesController)
+// --- Cargar documentos ---
+const cpUpload = upload.fields([
+  { name: "profile", maxCount: 1 },
+  { name: "product", maxCount: 3 },
+  { name: "document", maxCount: 3 },
+]);
+router.post("/:uid/documents", cpUpload, uploadFilesController);
 
 export default router;
 

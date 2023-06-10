@@ -6,6 +6,7 @@ import { Strategy as GithubStrategy } from "passport-github2";
 import UsersDBDTO from "../persistencia/DTO/usersDB.dto.js";
 import config from "../config.js";
 import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
+import { loginService } from "../services/users.services.js";
 
 // *** Passport Registro ***
 passport.use(
@@ -75,14 +76,19 @@ passport.use(
           if (isPassword) {
             console.log("Login realizado con éxito");
 
-            req.session.fullName = user.full_name;
-            req.session.email = user.email;
-            req.session.password = user.password;
-            req.session.role = user.role;
+            // req.session.fullName = user.full_name;
+            // req.session.email = user.email;
+            // req.session.password = user.password;
+            // req.session.role = user.role;
             req.user = user; //funciona
             req.session.user = user;
 
-            return done(null, user); //el primer null se refiere al error, lo segundo a si encontró usuario
+            req.session.save()
+            //actualiza fecha y hora de login
+            const time = new Date();
+            const response = await loginService(req.user, time)
+
+            return done(null, response); //el primer null se refiere al error, lo segundo a si encontró usuario
           } else {
             console.log("contraseñas no coinciden");
             return done(null, false);
