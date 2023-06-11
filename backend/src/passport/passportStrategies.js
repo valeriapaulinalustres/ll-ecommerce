@@ -8,6 +8,7 @@ import config from "../config.js";
 import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
 import { loginService } from "../services/users.services.js";
 
+
 // *** Passport Registro ***
 passport.use(
   "registro",
@@ -108,8 +109,8 @@ passport.use(
 passport.use(
   new GithubStrategy(
     {
-      clientID: "Iv1.672fec06309dff3d",
-      clientSecret: "3ba2e70390df01fa7eb49cef3fbbe434b07ffefc",
+      clientID: config.CLIENT_ID_GITHUB,
+      clientSecret: config.CLIENT_SECRET_GITHUB,
       callbackURL: "http://localhost:8080/api/users/github/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
@@ -137,8 +138,8 @@ passport.use(
 
 // *** Google Strategy ***
 passport.use('google', new GoogleStrategy({
-  clientID: '569130855734-ak7t8k24icf4qdj27ecmphvhhb9carm2.apps.googleusercontent.com',
-  clientSecret: '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',
+  clientID: config.CLIENT_ID_GOOGLE,
+  clientSecret: config.CLIENT_SECRET_GOOGLE,
   callbackURL: "http://localhost:8080/api/users/google"
 },
 async function(accessToken, refreshToken, profile, done) {

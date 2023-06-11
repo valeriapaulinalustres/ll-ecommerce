@@ -96,7 +96,7 @@ try {
   const response = await changeRolServices(userId)
   console.log(response)
   if (response) {
-    res.json({ message: 'Role update successfully', user: response });
+    res.json({ message: 'Role updated successfully', user: response });
   } else {
 res.json({message: 'Could not change rol. User must upload documentation.'})
   }
