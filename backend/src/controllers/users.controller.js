@@ -195,7 +195,7 @@ try {
 }
 
 export const logoutController = async (req, res) =>{
-
+console.log('req.user', req.user)
     req.session.destroy(async (error) => {
       if (error) {
         logger.error('Error del controller', error)
