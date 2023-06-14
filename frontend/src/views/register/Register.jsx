@@ -6,10 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import UsersContext from '../../context/UsersContext';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
 
     const {registro, registroGithub, registroGoogle} = useContext(UsersContext)
+
+    const navigate = useNavigate()
 
 function handleSubmitRegister (e) {
     e.preventDefault()
@@ -35,7 +38,14 @@ const newUser = {
     password: e.target[4].value
 }
 
-        registro(newUser)
+
+        registro(newUser).then(()=>navigate('/login'))
+        e.target[0].value = ""
+e.target[1].value = "" 
+e.target[2].value = "" 
+e.target[3].value = "" 
+e.target[4].value = "" 
+e.target[5].value = "" 
 }
 
 function handleRegisterGithub() {

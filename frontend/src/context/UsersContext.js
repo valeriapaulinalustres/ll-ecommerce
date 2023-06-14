@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { base_URL } from "../utils/mainRoute.js";
+import { base_URL, front_URL } from "../utils/mainRoute.js";
 import { fetchFunction } from "../utils/utilsFetch.js";
 import { errorFetchAlert, toastAlert } from "../utils/alerts.js";
 
@@ -13,6 +13,7 @@ const UsersProvider = ({ children }) => {
   const [existUser, setExistUser] = useState(false)
   const [loginError, setLoginError] = useState(false)
   const [user, setUser] = useState({})
+  const [users, setUsers] = useState([])
 
 
   //Obtener usuario actual del req.user, no funciona
@@ -72,14 +73,14 @@ async function registro (newUser) {
 
 //registro con GitHub
   async function registroGithub () {
-    const response = await fetch(`http://localhost:8080/api/users/registroGithub`)
+    const response = await fetch(`${base_URL}/api/users/registroGithub`)
     let responseData = await response.json();
     console.log(responseData);
   }
 
   //registro con Google
   async function registroGoogle () {
-    const response = await fetch(`http://localhost:8080/api/users/registroGoogle`)
+    const response = await fetch(`${base_URL}/api/users/registroGoogle`)
     let responseData = await response.json();
     console.log(responseData);
   }
@@ -115,7 +116,7 @@ async function registro (newUser) {
       //para que vuelva a login en sessión expirada
       if (responseData.error.code === 903) {
         toastAlert("error", "Session expired");
-        window.location.href = "http://localhost:3000/"
+        window.location.href = front_URL
         return null;
       } else {
         errorFetchAlert(responseData.error.message);
@@ -126,10 +127,52 @@ async function registro (newUser) {
       throw new Error('error');
     }
   } catch (error) {
-    console.log('error');
+    console.log('error', error);
   }
  }
 
+
+ async function getUsers (){
+  try {
+    const response = await fetch(`${base_URL}/api/users`)
+    const responseData = await response.json()
+    console.log(responseData)
+    setUsers(responseData.users)
+  } catch (error) {
+    console.log('error', error)
+  }
+
+ }
+
+ async function deleteUsersDisconnected (){
+  try {
+    const response = await fetch(`${base_URL}/api/users`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    let responseData = await response.json();
+console.log(responseData)
+    // if (response.status === 200) {
+    //   return responseData;
+    // } else {
+    //   console.log(responseData.error); //devuelve {code: , message: '', internal message: ''}
+    //   //para que vuelva a login en sessión expirada
+    //   if (responseData.error.code === 903) {
+    //     toastAlert("error", "Session expired");
+    //     window.location.href = front_URL
+    //     return null;
+    //   } else {
+    //     errorFetchAlert(responseData.error.message);
+    //     //window.location.href = "http://localhost:3000/"
+    //   }
+     
+      
+    //   throw new Error('error');
+    //}
+  } catch (error) {
+    console.log('error', error);
+  }
+ }
 
 
   const data = {
@@ -147,7 +190,11 @@ async function registro (newUser) {
     user,
     setUser,
     addCartToUser,
-    registroGoogle
+    registroGoogle,
+    getUsers,
+    users, 
+    setUsers,
+    deleteUsersDisconnected
   };
 
   return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;

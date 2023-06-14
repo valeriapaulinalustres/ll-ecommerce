@@ -13,6 +13,7 @@ import Product from "./views/product/Product";
 import Cart from "./views/cart/Cart";
 import { CartProvider } from "./context/CartContext";
 import AddProduct from "./views/addProduct/AddProduct";
+import Users from "./views/users/Users";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/add-product" element={<AddProduct />} />
             <Route path="/edit-product" element={<AddProduct />} />
+            <Route path="/users" element={<Users />} />
           </Routes>
         </BrowserRouter>
         </CartProvider>

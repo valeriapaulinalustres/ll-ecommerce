@@ -13,6 +13,7 @@ import styles from "../../styles/Header.module.css";
 import {TbPlant} from 'react-icons/tb'
 import {MdOutlineAddCircle} from 'react-icons/md'
 import ProductsContext from "../../context/ProductsContext";
+import {HiOutlineUsers} from 'react-icons/hi'
 
 function Header() {
   const { login, existUser, setExistUser, logout, getCartById, user } =
@@ -87,6 +88,13 @@ function Header() {
             </Link>
     
    
+          }
+          {
+            (user.role == 'admin') &&
+            <Link to='/users'>
+    <HiOutlineUsers className={styles.cartIcon}/>
+            </Link>
+        
           }
 
           <Form className="d-flex">
