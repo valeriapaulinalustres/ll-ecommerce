@@ -61,7 +61,10 @@ async function addProductToCart (pid, cid, user) {
             user
         })
     console.log(response)
-    if (response.status === 'success') { return toastAlert('success', 'Producto agregado con éxito')} else {
+    if (response.status === 'success') { 
+       
+        return toastAlert('success', 'Producto agregado con éxito')
+    } else {
         return toastAlert('error', 'No se ha podido agregar el producto')
     }
     } catch (error) {
@@ -72,6 +75,7 @@ async function addProductToCart (pid, cid, user) {
 
 //Elimina un producto del carrito 
 async function deleteProductFromCart (cid,pid){
+    console.log('aca',cid,pid)
     try {
         const response = await fetch(`${base_URL}/api/carts/${cid}/product/${pid}`, {
         
@@ -127,6 +131,7 @@ if (responseData.message.status === 'success') {
 
 //Elimina un producto del carrito, a través de la cruz
 async function eraseProductFromCart (cid,pid){
+    console.log('y por acá');
     try {
         const response = await fetch(`${base_URL}/api/carts/${cid}/product/${pid}/erase`, {
         

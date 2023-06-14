@@ -27,6 +27,7 @@ function Cart() {
   }
 
   function handleDeleteProduct(pid) {
+
     console.log("delete");
     deleteProductFromCart(user.cartId, pid).then(() =>
     getCartById(user.cartId))
@@ -41,7 +42,7 @@ function Cart() {
 let subtotal = 0
 cart?.message?.products?.forEach(el=>{
    
-    let subtotalEl = el.id.price * el.quantity
+    let subtotalEl = el.id?.price * el.quantity
     subtotal = subtotal + subtotalEl
    
    
@@ -65,8 +66,8 @@ let cid = user.cartId;
     getCartById(user.cartId))
   }
 
-  function handleDeleteProduct (e, pid){
-    
+  function handleEraseProduct (e, pid){
+    console.log('pasa por acá');
     let cid = user.cartId
 
     eraseProductFromCart(cid,pid).then(() =>
@@ -74,7 +75,7 @@ let cid = user.cartId;
   }
 
   console.log('user', user)
-
+console.log('cart', cart)
   return (
     <div>
       <div className="card">
@@ -99,32 +100,36 @@ let cid = user.cartId;
                   <div className="row border-top border-bottom" key={index}>
                     <div className="row main align-items-center">
                       <div className="col-2">
-                        <img className="img-fluid" src={el.id.thumbnails[0]} />
+                        <img className="img-fluid" src={el.id?.thumbnails[0]} />
                       </div>
                       <div className="col">
-                        <div className="row text-muted">{el.id.title}</div>
-                        <div className="row">{el.id.description}</div>
+                        <div className="row text-muted">{el.id?.title}</div>
+                        <div className="row">{el.id?.description}</div>
                       </div>
                       <div className="col">
-                        <Button onClick={() => handleDeleteProduct(el.id._id)}>
+                        <Button onClick={() => handleDeleteProduct(el.id?._id)}>
                           <TiMinusOutline />
                         </Button>
 
                         {/* <div className="border">{el.quantity}</div> */}
-                        <input 
-                        type='number' 
-                        defaultValue={el.quantity} 
-                        onChange={(e)=>handleChangeQty(e, el.id._id)}
-                        min='1'
-                        />
+                        <div>{el.quantity}</div>
+                    
 
-                        <Button onClick={() => handleAddProduct(el.id._id)}>
+                        <Button onClick={() => handleAddProduct(el.id?._id)}>
                           <TiPlusOutline />
                         </Button>
+                       
+                        <label for='qty'> Agrega una cantidad a comprar:</label>
+                        <input 
+                        type='number' 
+                       id='qty'
+                        onChange={(e)=>handleChangeQty(e, el.id?._id)}
+                        min='1'
+                        />
                       </div>
                       <div className="col">
-                        ${el.id.price} x {el.quantity} = ${el.id.price * el.quantity}
-                        <span className="close" onClick={(e)=>handleDeleteProduct(e, el.id._id)}>&#10005;</span>
+                        ${el.id?.price} x {el.quantity} = ${el.id?.price * el.quantity}
+                        <span className="close" onClick={(e)=>handleEraseProduct(e, el.id?._id)}>&#10005;</span>
                       </div>
                     </div>
                   </div>
