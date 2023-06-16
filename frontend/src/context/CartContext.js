@@ -11,6 +11,7 @@ const CartProvider = ({children}) =>{
     const [cart, setCart] = useState([])
     const [emptyCart, setEmptyCart] = useState(true)
     const [existCart, setExistCart] = useState(false)
+    const [ticket, setTicket] = useState(null)
 
     const {addCartToUser, user} = useContext(UsersContext)
 
@@ -150,6 +151,24 @@ async function eraseProductFromCart (cid,pid){
 
 }
 
+//Completa la compra
+async function completeSale (cid, user){
+    console.log(cid)
+    const response = await fetchFunction(`/api/carts/${cid}/purchase`,{
+        user
+    })
+    console.log(response)
+    
+
+    if ( response.message.ticket) {
+        toastAlert('success', response.message.message)
+       setTicket(response.message.ticket)
+      } else {
+        toastAlert('error', response.message.message)
+      }
+     
+}
+
 
     const data = {
         getCartById,
@@ -164,7 +183,10 @@ async function eraseProductFromCart (cid,pid){
         deleteProductFromCart,
         deleteCart,
         editProductQty,
-        eraseProductFromCart
+        eraseProductFromCart,
+        completeSale,
+        ticket, 
+        setTicket
     }
     return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 }

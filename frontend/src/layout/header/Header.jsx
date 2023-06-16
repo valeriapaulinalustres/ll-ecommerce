@@ -83,7 +83,7 @@ function Header() {
             <Link to='/add-product'>
         <div onClick={()=>setProductToEdit(null)}>
         <TbPlant className={styles.cartIcon}/>
-           <MdOutlineAddCircle className={styles.cartIcon}/>
+           {/* <MdOutlineAddCircle className={styles.cartIcon}/> */}
             </div>
             </Link>
     

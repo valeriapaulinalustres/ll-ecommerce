@@ -9,8 +9,17 @@ import Button from "react-bootstrap/Button";
 import { toastAlert } from "../../utils/alerts";
 
 function Cart() {
-  const { cart, getCartById, addProductToCart, deleteProductFromCart, deleteCart, editProductQty, eraseProductFromCart } =
-    useContext(CartContext);
+  const { 
+    cart, 
+    getCartById, 
+    addProductToCart, 
+    deleteProductFromCart, 
+    deleteCart, 
+    editProductQty, 
+    eraseProductFromCart,
+    completeSale,
+    ticket
+  } = useContext(CartContext);
   const { user } = useContext(UsersContext);
 
   useEffect(() => {
@@ -72,6 +81,10 @@ let cid = user.cartId;
 
     eraseProductFromCart(cid,pid).then(() =>
     getCartById(user.cartId))
+  }
+
+  function handleCompleteSale () {
+    completeSale(user.cartId, user).then(()=>getCartById(user.cartId))
   }
 
   console.log('user', user)
@@ -145,7 +158,11 @@ console.log('cart', cart)
               </Link>
             </div>
           </div>
-          <div className="col-md-4 summary">
+         
+
+
+            
+            <div className="col-md-4 summary">
             <div>
               <h5>
                 <b>Summary</b>
@@ -178,8 +195,24 @@ console.log('cart', cart)
               <div className="col">TOTAL PRICE</div>
               <div className="col text-right">${subtotal} falta sumar delivery</div>
             </div>
-            <Button >Finalizar compra</Button>
+            <Button onClick={handleCompleteSale}>Finalizar compra</Button>
           </div>
+        
+
+         
+            {
+              ticket &&
+              <div>
+              <h5>Ticket de compra</h5>
+              <h6>Comprador: {ticket.purchaser}</h6>
+              <h6>Monto: ${ticket.amount}</h6>
+              <h6>Código de compra: {ticket.code}</h6>
+              <h6>Fecha de compra: {ticket.purchase_datetime}</h6>
+              </div>
+            }
+
+
+          
         </div>
       </div>
     </div>

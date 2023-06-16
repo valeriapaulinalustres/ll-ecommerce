@@ -45,7 +45,10 @@ console.log('edited', editedProduct)
   return (
     <>
       {productToEdit ? (
+        <div>
+  <h2>Editar producto</h2>
         <form className={styles.productContainer} onSubmit={(e)=>handleEditProduct(e)}>
+          
           <div>
             <input type="text" defaultValue={productToEdit?.thumbnails[0]} />
             <input type="text" defaultValue={productToEdit?.thumbnails[1]} />
@@ -91,32 +94,39 @@ console.log('edited', editedProduct)
             </Link>
           </div>
         </form>
-      ) : (
-        <form className={styles.productContainer} onSubmit={handleAddProduct}>
-          <div>
-            <input type="text" placeholder="img URL 1" />
-            <input type="text" placeholder="img URL 2" />
-            <input type="text" placeholder="img URL 3" />
-          </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Título"
-              required
-              defaultValue={productToEdit?.title}
-            />
-            <input type="text" placeholder="Categoría" required />
-            <input type="text" placeholder="Código" required />
-            <input type="text" placeholder="Descripción" required />
-            <input type="number" placeholder="Precio" required />
-            <input type="number" placeholder="Stock" required />
-            Status: <input type="checkbox" />
-            <Button type="submit">Crear producto</Button>
-            <Link to="/">
-              <Button>Volver al Home</Button>
-            </Link>
-          </div>
-        </form>
+
+        </div>
+            ) : (
+              <div>
+ <h2>Crear producto</h2>
+ <form className={styles.productContainer} onSubmit={handleAddProduct}>
+         
+         <div>
+           <input type="text" placeholder="img URL 1" />
+           <input type="text" placeholder="img URL 2" />
+           <input type="text" placeholder="img URL 3" />
+         </div>
+         <div>
+           <input
+             type="text"
+             placeholder="Título"
+             required
+             defaultValue={productToEdit?.title}
+           />
+           <input type="text" placeholder="Categoría" required />
+           <input type="text" placeholder="Código" required />
+           <input type="text" placeholder="Descripción" required />
+           <input type="number" placeholder="Precio" required />
+           <input type="number" placeholder="Stock" required />
+           Status: <input type="checkbox" />
+           <Button type="submit">Crear producto</Button>
+           <Link to="/">
+             <Button>Volver al Home</Button>
+           </Link>
+         </div>
+       </form>
+              </div>
+        
       )}
     </>
   );
