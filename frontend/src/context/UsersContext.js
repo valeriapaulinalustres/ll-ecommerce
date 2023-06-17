@@ -86,13 +86,15 @@ async function registro (newUser) {
   }
 
  //cerrar cesión de usuario
- async function logout (){
-  const response = await fetch(`${base_URL}/api/users/logout`)
-  let responseData = await response.json();
+ async function logout (user){
+  const response = await fetchFunction(`/api/users/logout`, {
+    user
+  })
+  console.log(response)
 
-  responseData.success
-  ? toastAlert('success', responseData.message)
-  : toastAlert('error', responseData.message)
+  response.success
+  ? toastAlert('success', response.message)
+  : toastAlert('error', response.message)
 
  } 
 

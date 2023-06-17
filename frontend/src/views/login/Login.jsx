@@ -91,10 +91,14 @@ const navigate = useNavigate()
 }
 <Row>
   <Col md='auto'>
-  <Button onClick={handleLoginGithub}>Ingresar con GitHub</Button>
+  <Button onClick={()=>{
+    const popup= window.open("https://localhost:8080/api/users/registroGoogle", "targetWindow", `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `)
+  }}>Ingresar con Google</Button>
   </Col>
   <Col md='auto'>
-  <Button onClick={handleLoginGoogle}>Ingresar con Google</Button>
+  <Button onClick={()=>{
+    const popup= window.open("https://localhost:8080/api/users/registroGithub", "targetWindow", `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `)
+  }}>Ingresar con Github</Button>
   </Col>
 
 

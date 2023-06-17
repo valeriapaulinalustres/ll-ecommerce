@@ -24,7 +24,7 @@ function Header() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    logout().then(() => {
+    logout(user).then(() => {
       navigate("/");
       setExistUser(false);
     });
