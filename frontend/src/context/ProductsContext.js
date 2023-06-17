@@ -29,21 +29,24 @@ const ProductsProvider = ({children}) => {
     }
 
     //Agregar productos
-    async function addProduct(newProduct,owner) {
+    async function addProduct(newProduct,owner,user) {
         console.log(newProduct, owner)
+        let response;
         try {
-            const response = await  fetchFunction(`/api/products`,{
+             response = await  fetchFunction(`/api/products`,{
                 newProduct,
                 owner
+             
                         })
-                        console.log('RESPONSE',response)
+                      
                         if(response.response.product) {
                             toastAlert('success', 'Producto creado con éxito')
                         } else {
                             toastAlert('error', 'Error al crear el producto')
                         }
         } catch (error) {
-            console.log('CATCH',error)
+           
+            toastAlert('error', response.message)
         }
   
     }
