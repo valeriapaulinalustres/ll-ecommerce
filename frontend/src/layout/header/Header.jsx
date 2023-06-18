@@ -72,14 +72,14 @@ function Header() {
           </Nav>
           {existUser && (
             <>
-              <h3>Bienvenido {user.full_name}</h3>
+              <h3>Bienvenido {user?.full_name}</h3>
               <BsCart4 onClick={handleGetCart} className={styles.cartIcon} />
             </>
           )
           
           }
           {
-            (user.role == 'admin' ||  user.role == 'premium') &&
+            (user?.role == 'admin' ||  user?.role == 'premium') &&
             <Link to='/add-product'>
         <div onClick={()=>setProductToEdit(null)}>
         <TbPlant className={styles.cartIcon}/>
@@ -90,7 +90,7 @@ function Header() {
    
           }
           {
-            (user.role == 'admin') &&
+            (user?.role == 'admin') &&
             <Link to='/users'>
     <HiOutlineUsers className={styles.cartIcon}/>
             </Link>

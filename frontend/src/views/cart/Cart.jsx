@@ -74,7 +74,9 @@ let cid = user.cartId;
    editProductQty(cid,pid, qty).then(() =>
     getCartById(user.cartId))
 
-    e.target.value = ""
+
+setTimeout(()=> e.target.value = "", 3000)
+   
   }
 
   function handleEraseProduct (e, pid){
