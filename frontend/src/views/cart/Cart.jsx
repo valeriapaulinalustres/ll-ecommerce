@@ -73,6 +73,8 @@ let cid = user.cartId;
 
    editProductQty(cid,pid, qty).then(() =>
     getCartById(user.cartId))
+
+    e.target.value = ""
   }
 
   function handleEraseProduct (e, pid){
