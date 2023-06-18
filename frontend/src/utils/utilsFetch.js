@@ -1,5 +1,5 @@
 import { errorFetchAlert, toastAlert } from "../utils/alerts";
-import { base_URL } from "./mainRoute";
+import { base_URL, front_URL } from "./mainRoute";
 
 export const fetchFunction = async (endpoint, body, method='POST') => {
   try {
@@ -17,7 +17,7 @@ export const fetchFunction = async (endpoint, body, method='POST') => {
       //para que vuelva a login en sessión expirada
       if (responseData.error.code === 903) {
         toastAlert("error", "Session expired");
-        window.location.href = "http://localhost:3000/"
+        window.location.href = front_URL
         return null;
       } else {
         errorFetchAlert(responseData.error.message);
