@@ -41,7 +41,7 @@ if ( response.message.success) {
    setCart(response.message.cart)
    setExistCart(false)
   } else {
-    toastAlert('error', response.message)
+    toastAlert('error', response.message.message)
   }
  
 }
@@ -71,7 +71,7 @@ async function addProductToCart (pid, cid, user) {
     }
     } catch (error) {
         console.log(error)
-        return toastAlert('error', response.message.message)
+        return toastAlert('error', response.message)
     }
 
 }
