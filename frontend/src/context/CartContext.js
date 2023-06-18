@@ -41,7 +41,7 @@ if ( response.message.success) {
    setCart(response.message.cart)
    setExistCart(false)
   } else {
-    toastAlert('error', response.message.message)
+    toastAlert('error', response.message)
   }
  
 }
