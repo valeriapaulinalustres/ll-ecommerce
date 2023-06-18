@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import UsersContext from '../../context/UsersContext';
 import { useNavigate } from 'react-router-dom';
+import { toastAlert } from '../../utils/alerts';
 
 function Register() {
 
@@ -27,7 +28,7 @@ function handleSubmitRegister (e) {
         
         )
 
-        if (e.target[4].value !== e.target[5].value) {console.log('Las contraseñas no coinciden')}
+        if (e.target[4].value !== e.target[5].value) {return toastAlert('error','Las contraseñas no coinciden')}
 
 
 const newUser = {

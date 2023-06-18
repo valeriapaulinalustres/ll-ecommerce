@@ -36,8 +36,9 @@ console.log(existUser)
 
 function handleAddToCart (pid) {
     if (existUser) {
-      if(!user.cartId) {
-        createNewCart(pid, 1).then(()=>navigate('/cart'))
+      console.log('user cart', user.cartId)
+      if(!user.hasOwnProperty('cartId')) {
+        createNewCart(pid, 1)
       } else {
         console.log('agregar al carr', user);
         console.log(pid)

@@ -132,7 +132,7 @@ console.log('cart', cart)
                           <TiPlusOutline />
                         </Button>
                        
-                        <label for='qty'> Agrega una cantidad a comprar:</label>
+                        <label htmlFor='qty'> Agrega una cantidad a comprar:</label>
                         <input 
                         type='number' 
                        id='qty'

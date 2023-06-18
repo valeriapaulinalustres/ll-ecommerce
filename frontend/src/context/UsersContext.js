@@ -112,6 +112,8 @@ async function registro (newUser) {
     let responseData = await response.json();
 
     if (response.status === 200) {
+      //actualiza el usuario porque ahora tiene carrito
+     setUser(responseData.user)
       return responseData;
     } else {
       console.log(responseData.error); //devuelve {code: , message: '', internal message: ''}
@@ -154,26 +156,55 @@ async function registro (newUser) {
     });
     let responseData = await response.json();
 console.log(responseData)
-    // if (response.status === 200) {
-    //   return responseData;
-    // } else {
-    //   console.log(responseData.error); //devuelve {code: , message: '', internal message: ''}
-    //   //para que vuelva a login en sessión expirada
-    //   if (responseData.error.code === 903) {
-    //     toastAlert("error", "Session expired");
-    //     window.location.href = front_URL
-    //     return null;
-    //   } else {
-    //     errorFetchAlert(responseData.error.message);
-    //     //window.location.href = "http://localhost:3000/"
-    //   }
-     
-      
-    //   throw new Error('error');
-    //}
+
+  toastAlert('success', `Usuarios eliminados: ${responseData.message.deletedDisconnected.length + responseData.message.deletedNotLogged.length}`)
+
   } catch (error) {
     console.log('error', error);
   }
+ }
+
+ async function deleteUser (email) {
+  try {
+    const response = await fetch(`${base_URL}/api/users/delete-user`,{
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+body: JSON.stringify({email})
+    })
+let responseData = await response.json();
+console.log(responseData)
+if (responseData.message.status === 'success') {
+  toastAlert('success', responseData.message.message)
+  getUsers()
+} else {
+  toastAlert('error', responseData.message.message)
+}
+  } catch (error) {
+    console.log('error', error)
+    toastAlert('error', error)
+  }
+ }
+
+ async function changeRolByAdmin (newRol, email) {
+  try {
+    const response = await fetch(`${base_URL}/api/users/change-rol`,{
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({newRol, email})
+    })
+    let responseData = await response.json()
+    console.log(responseData)
+if (responseData.message.status === 'success') {
+  toastAlert('success', responseData.message.message)
+  getUsers()
+} else {
+  toastAlert('error', responseData.message.message)
+}
+  } catch (error) {
+    console.log('error', error)
+    toastAlert('error', error)
+  }
+
  }
 
 
@@ -196,7 +227,9 @@ console.log(responseData)
     getUsers,
     users, 
     setUsers,
-    deleteUsersDisconnected
+    deleteUsersDisconnected,
+    deleteUser,
+    changeRolByAdmin
   };
 
   return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;

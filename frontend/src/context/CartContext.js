@@ -56,20 +56,22 @@ async function getCartById (cid) {
 
 //Agrega un producto a un carrito
 async function addProductToCart (pid, cid, user) {
+    let response;
     try {
         console.log(pid, cid)
-        const response = await fetchFunction(`/api/carts/${cid}/product/${pid}`,{
+        response = await fetchFunction(`/api/carts/${cid}/product/${pid}`,{
             user
         })
     console.log(response)
-    if (response.status === 'success') { 
+    if (response.message.status === 'success') { 
        
-        return toastAlert('success', 'Producto agregado con éxito')
+        return toastAlert('success', response.message.message)
     } else {
-        return toastAlert('error', 'No se ha podido agregar el producto')
+        return toastAlert('error', response.message.message)
     }
     } catch (error) {
         console.log(error)
+        return toastAlert('error', response.message.message)
     }
 
 }
