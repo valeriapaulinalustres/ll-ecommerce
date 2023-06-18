@@ -67,7 +67,7 @@ async function addProductToCart (pid, cid, user) {
        
         return toastAlert('success', response.message.message)
     } else {
-        return toastAlert('error', response.message.message)
+        return toastAlert('error', response.message)
     }
     } catch (error) {
         console.log(error)
