@@ -117,7 +117,7 @@ function Login() {
                   if(event.origin === "https://e-commerce-production-8113.up.railway.app") {
                     if (event.data) {
                       console.log(event.data)
-                      setUser(JSON.stringify(event.data))
+                      localStorage.setItem("User", JSON.stringify(event.data))
                       popup?.close()
                     }
                   }
