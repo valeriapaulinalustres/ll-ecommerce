@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import UsersContext from "../../context/UsersContext.js";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import { base_URL } from "../../utils/mainRoute";
 
 function Login() {
   const {
@@ -108,7 +109,7 @@ function Login() {
               className={styles.button}
               onClick={() => {
                 const popup = window.open(
-                  "https://localhost:8080/api/users/registroGoogle",
+                  `${base_URL}/api/users/registroGoogle`,
                   "targetWindow",
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
@@ -122,7 +123,7 @@ function Login() {
               className={styles.button}
               onClick={() => {
                 const popup = window.open(
-                  "https://localhost:8080/api/users/registroGithub",
+                  `${base_URL}/api/users/registroGithub`,
                   "targetWindow",
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
