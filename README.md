@@ -34,5 +34,5 @@ SweetAlert
 
 Frontend deploy: "https://ll-ecommerce-p4ro.vercel.app/"
 
-## Deploy
+## Fulstack Deploy
  Please run "https://ll-ecommerce-p4ro.vercel.app/"
