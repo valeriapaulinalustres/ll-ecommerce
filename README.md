@@ -3,20 +3,20 @@
 
 ## Backend Features
 
-Node Js
-Express Js
-API REST
-Multer
-Swagger
-Winston
-Faker
-Bcrypt
-Dotenv
-Handlebars
-Jwt
-Nodemailer
-Passport
-Socket io
+Node Js,
+Express Js,
+API REST,
+Multer,
+Swagger,
+Winston,
+Faker,
+Bcrypt,
+Dotenv,
+Handlebars,
+Jwt,
+Nodemailer,
+Passport,
+Socket io.
 
 Backend deploy: "https://e-commerce-production-8113.up.railway.app"
 
@@ -26,11 +26,11 @@ Mongo Atlas - Mongoose
 
 ## Frontend Features
 
-React Js
-Bootstrap
-React-router-dom
-Context
-SweetAlert
+React Js,
+Bootstrap,
+React-router-dom,
+Context,
+SweetAlert.
 
 Frontend deploy: "https://ll-ecommerce-p4ro.vercel.app/"
 
