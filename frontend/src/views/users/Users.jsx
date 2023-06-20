@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import UsersContext from "../../context/UsersContext";
-import { SlPencil } from "react-icons/sl";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { GrUserAdmin } from "react-icons/gr";
+import { MdOutlineKey } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toastAlert } from "../../utils/alerts";
+import styles from "../../styles/Users.module.css";
 
 function Users() {
   const {
@@ -34,45 +34,54 @@ function Users() {
   }
 
   function handleChangeRolByAdmin(e) {
-if (newRol === 'seleccionar' || !newRol) {return toastAlert('error', 'Debe seleccionar un nuevo rol')}
+    if (newRol === "seleccionar" || !newRol) {
+      return toastAlert("error", "Debe seleccionar un nuevo rol");
+    }
 
-    console.log("modal", newRol, emailToChangeRol);
-    changeRolByAdmin(newRol, emailToChangeRol)
-setEmailToChangeRol(null)
-setNewRol(null)
-setSelectNewRolOn(false)
+    changeRolByAdmin(newRol, emailToChangeRol);
+    setEmailToChangeRol(null);
+    setNewRol(null);
+    setSelectNewRolOn(false);
   }
 
-  console.log(emailToChangeRol, newRol);
-
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Lista de usuarios</h2>
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Email</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Edición</th>
+            <th scope="col" className={styles.text}>
+              Nombre
+            </th>
+            <th scope="col" className={styles.text}>
+              Email
+            </th>
+            <th scope="col" className={styles.text}>
+              Rol
+            </th>
+            <th scope="col" className={styles.text}>
+              Edición
+            </th>
           </tr>
         </thead>
         <tbody>
           {users.map((el, index) => {
             return (
               <tr key={index}>
-                <td>{el.full_name}</td>
-                <td>{el.email}</td>
-                <td>{el.role}</td>
+                <td className={styles.text}>{el.full_name}</td>
+                <td className={styles.text}>{el.email}</td>
+                <td className={styles.text}>{el.role}</td>
                 <td>
                   <RiDeleteBin6Line
                     onClick={() => handleDeleteUser(el.email)}
+                    className={styles.icon}
                   />
-                  <GrUserAdmin
+                  <MdOutlineKey
                     onClick={() => {
                       setSelectNewRolOn(true);
                       setEmailToChangeRol(el.email);
                     }}
+                    className={styles.icon}
                   />
                 </td>
               </tr>
@@ -114,9 +123,9 @@ setSelectNewRolOn(false)
           )}
         </tbody>
       </table>
-      <Button onClick={handleDeleteUsersDisconnected}>
+      <button onClick={handleDeleteUsersDisconnected} className={styles.button}>
         Eliminar los usuarios que no hayan tenido conexión en los últimos 2 días
-      </Button>
+      </button>
     </div>
   );
 }

@@ -1,142 +1,178 @@
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import FloatingLabel from 'react-bootstrap/FloatingLabel'
-import Container from 'react-bootstrap/Container';
-
-import { useContext } from "react";
-import { base_URL } from "../../utils/mainRoute.js";
+import button from "react-bootstrap/button";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Container from "react-bootstrap/Container";
+import styles from "../../styles/Login.module.css";
+import { useContext, useState } from "react";
 import UsersContext from "../../context/UsersContext.js";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 
-function Login () {
+function Login() {
+  const {
+    login,
+    existUser,
+    setExistUser,
+    registroGithub,
+    loginError,
+    registroGoogle,
+    forgotPassword,
+  } = useContext(UsersContext);
 
+  const [forgotPasswordOn, setForgotPasswordOn] = useState(false);
 
-const {
-  login, 
-  existUser,
-  setExistUser,
-  registroGithub,
-  loginError, 
-  setLoginError,
-  getCurrentUser,
-  getCurrentUserFromMail,
-  registroGoogle
+  const navigate = useNavigate();
 
-} = useContext(UsersContext)
+  function handleSubmitLogin(e) {
+    e.preventDefault();
 
-const navigate = useNavigate()
-      
-      function handleSubmitLogin (e) {
-        e.preventDefault()
-           
-        login(e.target[0].value, e.target[1].value).then(() => {
-          getCurrentUserFromMail(e.target[0].value);
-          navigate("/")
-        })
+    login(e.target[0].value, e.target[1].value).then(() => {
+      if (existUser) {
+        navigate("/");
       }
+    });
+  }
+  if (existUser) {
+    navigate("/");
+  }
+  const github = () => {
+    window.open("http://localhost:8080/api/users/registroGithub", "_self");
+  };
 
-      const github = () => {
-        window.open("http://localhost:8080/api/users/registroGithub", "_self");
-      }    
+  function handleLoginGithub() {
+    registroGithub();
+  }
 
-      function handleLoginGithub () {
-        registroGithub()
-      }
+  function handleLoginGoogle() {
+    registroGoogle();
+  }
 
-      function handleLoginGoogle () {
-        registroGoogle()
-      }
+  function handleForgotPassword(e) {
+    e.preventDefault();
+    forgotPassword(e.target[1].value);
+    setForgotPasswordOn(false);
+  }
 
-    return (
-<Container >
-  <Row>
-  <h1>Login</h1>
-  </Row>
-<Form onSubmit={handleSubmitLogin}>
-      <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-        
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Email"
-        className="mb-3"
-      >
-        <Form.Control type="email" placeholder="name@example.com" name="email"/>
-      </FloatingLabel>
-      <FloatingLabel controlId="floatingPassword" label="Password">
-        <Form.Control type="password" placeholder="Password" name="password"/>
-      </FloatingLabel>
-        
-       
-      </Form.Group>
+  return (
+    <Container className={styles.container}>
       <Row>
-      <Col>
-<p>¿Olvidaste tu contraseña?</p>
-</Col>
-     <Col>
-     <Form.Group as={Row} className="mb-3">
-        <Col sm={{ span: 10, offset: 2 }}>
-          <Button type="submit">Sign in</Button>
-        </Col>
-      </Form.Group>
-     </Col>
+        <h1>Login</h1>
       </Row>
+      <Form onSubmit={handleSubmitLogin}>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Email"
+            className="mb-3"
+          >
+            <Form.Control
+              type="email"
+              placeholder="name@example.com"
+              name="email"
+            />
+          </FloatingLabel>
+          <FloatingLabel controlId="floatingPassword" label="Password">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+            />
+          </FloatingLabel>
+        </Form.Group>
+        <Row>
+          <Col>
+            <p
+              onClick={() => setForgotPasswordOn(true)}
+              className={styles.questionForgotPassword}
+            >
+              ¿Olvidaste tu contraseña?
+            </p>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Col>
+              <button className={styles.button} type="submit">
+                Ingresar
+              </button>
+            </Col>
+          </Col>
+        </Row>
 
-   
+        {loginError && <div>Usuario o contraseña incorrecto</div>}
+        <Row>
+          <Col md="auto">
+            <button
+              className={styles.button}
+              onClick={() => {
+                const popup = window.open(
+                  "https://localhost:8080/api/users/registroGoogle",
+                  "targetWindow",
+                  `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
+                );
+              }}
+            >
+              Ingresar con Google
+            </button>
+          </Col>
+          <Col md="auto">
+            <button
+              className={styles.button}
+              onClick={() => {
+                const popup = window.open(
+                  "https://localhost:8080/api/users/registroGithub",
+                  "targetWindow",
+                  `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
+                );
+              }}
+            >
+              Ingresar con Github
+            </button>
+          </Col>
+        </Row>
+        <p className={styles.questionAccount}>¿No tenés una cuenta? </p>
+        <Row>
+          <Col>
+            <button
+              className={styles.button}
+              onClick={() => navigate("/register")}
+            >
+              Crear cuenta
+            </button>
+          </Col>
+        </Row>
+      </Form>
 
-     
-      {
-  loginError && <div>Usuario o contraseña incorrecto</div>
+      {forgotPasswordOn && (
+        <Form
+          className="modal show"
+          style={{ display: "block", position: "initial" }}
+          onSubmit={handleForgotPassword}
+        >
+          <Modal.Dialog>
+            <Modal.Header
+              closeButton
+              onClick={() => setForgotPasswordOn(false)}
+            >
+              <Modal.Title>Olvidé mi contraseña</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <Form.Control type="email" placeholder="email" />
+            </Modal.Body>
+
+            <Modal.Footer>
+              <button type="submit" className={styles.button}>
+                Guardar cambios
+              </button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Form>
+      )}
+    </Container>
+  );
 }
-<Row>
-  <Col md='auto'>
-  <Button onClick={()=>{
-    const popup= window.open("https://localhost:8080/api/users/registroGoogle", "targetWindow", `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `)
-  }}>Ingresar con Google</Button>
-  </Col>
-  <Col md='auto'>
-  <Button onClick={()=>{
-    const popup= window.open("https://localhost:8080/api/users/registroGithub", "targetWindow", `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `)
-  }}>Ingresar con Github</Button>
-  </Col>
+export default Login;
 
-
-</Row>
-
-
-    </Form>
- 
-<p>¿No tenés una cuenta? </p>
-<Button>Crear cuenta</Button>
-
-  
-      
-      
-      
-</Container>
-
-     
-    )
-}
-export default Login
-
-/*
-
-<div>
- <form className="App" onSubmit={handleSubmitLogin} method='post' action='http://localhost:8080/api/users/login'>
-     <input type='email' name='email'/>
-     <input type='password' name='password' />
-     <input type='submit' value='Enviar'/>
-    </form>
-{
-  loginError && <div>Usuario o contraseña incorrecto</div>
-}
-    <div  onClick={github}>
-                        
-                        Github
-                    </div>
-      </div>
-       
-
-      */

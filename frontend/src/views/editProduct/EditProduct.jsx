@@ -1,24 +1,7 @@
-import { useContext } from "react"
-import AddEditProductRender from "../../components/AddEditProductRender"
-import ProductsContext from "../../context/ProductsContext"
-import UsersContext from "../../context/UsersContext"
+import AddEditProductRender from "../../components/AddEditProductRender";
 
-
-
-function EditPrduct () {
-
-
-    const {   productToEdit, 
-        setProductToEdit, editProduct} = useContext(ProductsContext)
-
-        const {user} = useContext(UsersContext)
-
-
-
-
-    return (
-<AddEditProductRender />
-    )
+function EditPrduct() {
+  return <AddEditProductRender />;
 }
 
-export default EditPrduct
+export default EditPrduct;

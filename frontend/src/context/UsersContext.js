@@ -3,233 +3,269 @@ import { base_URL, front_URL } from "../utils/mainRoute.js";
 import { fetchFunction } from "../utils/utilsFetch.js";
 import { errorFetchAlert, toastAlert } from "../utils/alerts.js";
 
-
 const UsersContext = createContext();
 
-
-
 const UsersProvider = ({ children }) => {
+  const [existUser, setExistUser] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [user, setUser] = useState({});
+  const [users, setUsers] = useState([]);
 
-  const [existUser, setExistUser] = useState(false)
-  const [loginError, setLoginError] = useState(false)
-  const [user, setUser] = useState({})
-  const [users, setUsers] = useState([])
+  // // --- Trae el usuario actual ---
+  // async function getCurrentUser() {
+  //   const response = await fetch(`${base_URL}/api/users/current`);
+  //   let responseData = await response.json();
+  // }
 
-
-  //Obtener usuario actual del req.user, no funciona
-  async function getCurrentUser(){
-    const response = await fetch(`${base_URL}/api/users/current`)
-    let responseData = await response.json();
- 
-   
+  // --- Obtiene usuario actual desde el mail que ingresa al login ---
+  async function getCurrentUserFromMail(mail) {
+    const response = await fetchFunction("/api/users/current", {
+      mail,
+    });
+    setUser(response.user);
   }
 
-//Obtener usuario actual desde el mail que ingresa al login
-async function getCurrentUserFromMail(mail){
-  const response = await fetchFunction('/api/users/current',{
-    mail
-  })
-  console.log(response.user)
-  setUser(response.user)
-}
-
-//Login de usuarios
-  async function login (email, password) {
-    const response = await fetchFunction('/api/users/login', 
-    {
+  // --- Login de usuarios ---
+  async function login(email, password) {
+    const response = await fetchFunction("/api/users/login", {
       email,
       password,
-    })
-    console.log(response)
-    setExistUser(response.existUser)
-    
-
-    if ( response.existUser) {
-      toastAlert('success', response.message)
-     
-    } else {
-      toastAlert('error', response.message)
-    }
-   
-   
-  }
-
-//Registro de usuarios nuevos
-async function registro (newUser) {
-  const {first_name, last_name, email, age, password} = newUser
-  const response = await fetchFunction('/api/users/registro',{
-    first_name, last_name, email, age, password
-  })
-
-  /*
-  Access to fetch at 'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fusers%2Fgithub%2Fcallback&scope=user%3Aemail&client_id=Iv1.672fec06309dff3d' (redirected from 'http://localhost:8080/api/users/registroGithub') from origin 'http://localhost:3000' has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header has a value 'http://localhost:3000' that is not equal to the supplied origin. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-  */
-
-
-  response.success
-  ? toastAlert('success', response.message)
-  : toastAlert('error', response.message)
-}
-
-//registro con GitHub
-  async function registroGithub () {
-    const response = await fetch(`${base_URL}/api/users/registroGithub`)
-    let responseData = await response.json();
-    console.log(responseData);
-  }
-
-  //registro con Google
-  async function registroGoogle () {
-    const response = await fetch(`${base_URL}/api/users/registroGoogle`)
-    let responseData = await response.json();
-    console.log(responseData);
-  }
-
- //cerrar cesión de usuario
- async function logout (user){
-  const response = await fetchFunction(`/api/users/logout`, {
-    user
-  })
-  console.log(response)
-
-  response.success
-  ? toastAlert('success', response.message)
-  : toastAlert('error', response.message)
-
- } 
-
- //Agregar un carrito a un usuario
- async function addCartToUser (uid, cid) {
-  try {
-    const response = await fetch(`${base_URL}/api/users/add-cart-to-user`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        uid:uid,
-        cid: cid
-      }),
     });
-    let responseData = await response.json();
+    setExistUser(response.existUser);
 
-    if (response.status === 200) {
-      //actualiza el usuario porque ahora tiene carrito
-     setUser(responseData.user)
-      return responseData;
+    if (response.existUser) {
+      toastAlert("success", response.message);
+
+      getCurrentUserFromMail(email);
+      setExistUser(true);
     } else {
-      console.log(responseData.error); //devuelve {code: , message: '', internal message: ''}
-      //para que vuelva a login en sessión expirada
-      if (responseData.error.code === 903) {
-        toastAlert("error", "Session expired");
-        window.location.href = front_URL
-        return null;
+      toastAlert("error", response.message);
+    }
+  }
+
+  // --- Registro de usuarios nuevos ---
+  async function registro(newUser) {
+    const { first_name, last_name, email, age, password } = newUser;
+    const response = await fetchFunction("/api/users/registro", {
+      first_name,
+      last_name,
+      email,
+      age,
+      password,
+    });
+
+    response.success
+      ? toastAlert("success", response.message)
+      : toastAlert("error", response.message);
+  }
+
+  // --- Registro con GitHub ---
+  async function registroGithub() {
+    const response = await fetch(`${base_URL}/api/users/registroGithub`);
+    let responseData = await response.json();
+    console.log(responseData);
+  }
+
+  // --- Registro con Google ---
+  async function registroGoogle() {
+    const response = await fetch(`${base_URL}/api/users/registroGoogle`);
+    let responseData = await response.json();
+    console.log(responseData);
+  }
+
+  // --- Logout ---
+  async function logout(user) {
+    const response = await fetchFunction(`/api/users/logout`, {
+      user,
+    });
+
+    response.success
+      ? toastAlert("success", response.message)
+      : toastAlert("error", response.message);
+  }
+
+  // --- Agrega un carrito a un usuario ---
+  async function addCartToUser(uid, cid) {
+    try {
+      const response = await fetch(`${base_URL}/api/users/add-cart-to-user`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: uid,
+          cid: cid,
+        }),
+      });
+      let responseData = await response.json();
+
+      if (response.status === 200) {
+        //actualiza el usuario porque ahora tiene carrito
+        setUser(responseData.user);
+        return responseData;
       } else {
-        errorFetchAlert(responseData.error.message);
-        //window.location.href = "http://localhost:3000/"
+        //para que vuelva a login en sessión expirada
+        if (responseData.error.code === 903) {
+          toastAlert("error", "Session expired");
+          window.location.href = front_URL;
+          return null;
+        } else {
+          errorFetchAlert(responseData.error.message);
+        }
+        throw new Error("error");
       }
-     
-      
-      throw new Error('error');
+    } catch (error) {
+      console.log("Error desde el context", error);
     }
-  } catch (error) {
-    console.log('error', error);
-  }
- }
-
-
- async function getUsers (){
-  try {
-    const response = await fetch(`${base_URL}/api/users`)
-    const responseData = await response.json()
-    console.log(responseData)
-    setUsers(responseData.users)
-  } catch (error) {
-    console.log('error', error)
   }
 
- }
-
- async function deleteUsersDisconnected (){
-  try {
-    const response = await fetch(`${base_URL}/api/users`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    let responseData = await response.json();
-console.log(responseData)
-
-  toastAlert('success', `Usuarios eliminados: ${responseData.message.deletedDisconnected.length + responseData.message.deletedNotLogged.length}`)
-
-  } catch (error) {
-    console.log('error', error);
-  }
- }
-
- async function deleteUser (email) {
-  try {
-    const response = await fetch(`${base_URL}/api/users/delete-user`,{
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-body: JSON.stringify({email})
-    })
-let responseData = await response.json();
-console.log(responseData)
-if (responseData.message.status === 'success') {
-  toastAlert('success', responseData.message.message)
-  getUsers()
-} else {
-  toastAlert('error', responseData.message.message)
-}
-  } catch (error) {
-    console.log('error', error)
-    toastAlert('error', error)
-  }
- }
-
- async function changeRolByAdmin (newRol, email) {
-  try {
-    const response = await fetch(`${base_URL}/api/users/change-rol`,{
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({newRol, email})
-    })
-    let responseData = await response.json()
-    console.log(responseData)
-if (responseData.message.status === 'success') {
-  toastAlert('success', responseData.message.message)
-  getUsers()
-} else {
-  toastAlert('error', responseData.message.message)
-}
-  } catch (error) {
-    console.log('error', error)
-    toastAlert('error', error)
+  // --- Trae usuarios ---
+  async function getUsers() {
+    try {
+      const response = await fetch(`${base_URL}/api/users`);
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    } catch (error) {
+      console.log("Error desde el context", error);
+    }
   }
 
- }
+  // --- Borra usuarios con antiguas conexiones ---
+  async function deleteUsersDisconnected() {
+    try {
+      const response = await fetch(`${base_URL}/api/users`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      let responseData = await response.json();
+      toastAlert(
+        "success",
+        `Usuarios eliminados: ${
+          responseData.message.deletedDisconnected.length +
+          responseData.message.deletedNotLogged.length
+        }`
+      );
+    } catch (error) {
+      console.log("Error desde el context", error);
+    }
+  }
 
+  // --- Elimina un usuario ---
+  async function deleteUser(email) {
+    try {
+      const response = await fetch(`${base_URL}/api/users/delete-user`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      let responseData = await response.json();
+      if (responseData.message.status === "success") {
+        toastAlert("success", responseData.message.message);
+        getUsers();
+      } else {
+        toastAlert("error", responseData.message.message);
+      }
+    } catch (error) {
+      toastAlert("error", error);
+    }
+  }
+
+  // --- Cambia el rol de un usuario ---
+  async function changeRolByAdmin(newRol, email) {
+    try {
+      const response = await fetch(`${base_URL}/api/users/change-rol`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newRol, email }),
+      });
+      let responseData = await response.json();
+      if (responseData.message.status === "success") {
+        toastAlert("success", responseData.message.message);
+        getUsers();
+      } else {
+        toastAlert("error", responseData.message.message);
+      }
+    } catch (error) {
+      toastAlert("error", error);
+    }
+  }
+
+  // --- Restaura contraseña primer paso ---
+  async function forgotPassword(email) {
+    const response = await fetchFunction(
+      "/api/users/forgot-password",
+      {
+        email,
+      },
+      "POST"
+    );
+    toastAlert("success", response.message);
+  }
+
+  // --- Restaura contraseña, segundo paso ---
+  async function changeForgottenPassword(password, uid, token) {
+    const response = await fetchFunction(
+      `/api/users/create-new-password/${uid}/${token}`,
+      {
+        password,
+      }
+    );
+    toastAlert("success", response.message);
+  }
+
+  // --- Sube foto de perfil ---
+  async function submitProfilePhoto(files) {
+    try {
+      const response = await fetch(
+        `${base_URL}/api/users/${user._id}/documents`,
+        {
+          method: "POST",
+          body: files,
+        }
+      );
+      const responseData = await response.json();
+      console.log(responseData);
+      toastAlert("success", responseData.message);
+    } catch (error) {
+      console.log("Error desde el context", error);
+    }
+  }
+
+  // --- Sube foto de producto ---
+  async function submitProductPhoto(file) {
+    console.log("del context", file);
+  }
+
+  // --- Sube documentos ---
+  async function submitDoc(file) {
+    console.log("del context", file);
+  }
 
   const data = {
     login,
     existUser,
     setExistUser,
     registroGithub,
-    loginError, 
+    loginError,
     setLoginError,
     registro,
     registroGithub,
     logout,
-    getCurrentUser,
+    //getCurrentUser,
     getCurrentUserFromMail,
     user,
     setUser,
     addCartToUser,
     registroGoogle,
     getUsers,
-    users, 
+    users,
     setUsers,
     deleteUsersDisconnected,
     deleteUser,
-    changeRolByAdmin
+    changeRolByAdmin,
+    forgotPassword,
+    changeForgottenPassword,
+    submitProfilePhoto,
+    submitProductPhoto,
+    submitDoc,
   };
 
   return <UsersContext.Provider value={data}>{children}</UsersContext.Provider>;

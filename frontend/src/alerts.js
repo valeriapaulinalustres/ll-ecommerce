@@ -14,28 +14,26 @@ export const toastAlert = (icon, message) => {
 };
 
 export const errorAlert = (text) => {
-    Swal.fire({
-      icon: "error",
-      iconColor: "red",
-      title: text,
-      showConfirmButton: false,
-    
-      showCancelButton: true,
-      cancelButtonText: "OK",
-      cancelButtonColor: "grey",
-    })
-  
-  }
+  Swal.fire({
+    icon: "error",
+    iconColor: "red",
+    title: text,
+    showConfirmButton: false,
 
-  export const errorFetchAlert = (text) => {
-    Swal.fire({
-      icon: "error",
-      iconColor: "red",
-      title: text,
-      // text: 'Ask us on dirask',
-      showConfirmButton: true,
-      confirmButtonText: "OK",
-      confirmButtonColor: "red",
+    showCancelButton: true,
+    cancelButtonText: "OK",
+    cancelButtonColor: "grey",
+  });
+};
 
-    })
-  }
+export const errorFetchAlert = (text) => {
+  Swal.fire({
+    icon: "error",
+    iconColor: "red",
+    title: text,
+    // text: 'Ask us on dirask',
+    showConfirmButton: true,
+    confirmButtonText: "OK",
+    confirmButtonColor: "red",
+  });
+};

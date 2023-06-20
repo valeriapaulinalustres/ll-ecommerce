@@ -1,31 +1,26 @@
-import { useEffect, useContext } from "react";
-import { base_URL } from "../../utils/mainRoute.js";
-import { useNavigate } from "react-router-dom";
-import UsersContext from "../../context/UsersContext.js";
+import { useEffect, useContext, useState } from "react";
 import Container from "react-bootstrap/esm/Container.js";
 import ProductCard from "../../components/productCard.jsx";
 import ProductsContext from "../../context/ProductsContext.js";
-import Row from "react-bootstrap/Row";
 import PaginationComponent from "../../components/PaginationComponent.jsx";
+import styles from "../../styles/Home.module.css";
 
 function Home() {
-  const { allProductsFromBack, getProducts } = useContext(ProductsContext);
 
-  const navigate = useNavigate();
-
+  const { allProductsFromBack, getProducts, pageCount, setPageCount, page, setPage } = useContext(ProductsContext);
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    getProducts(page);
+  }, [page]);
 
   return (
-    <Container>
-      <Row>
+    <Container className={styles.container}>
+      <div className={styles.cardContainer}>
         {allProductsFromBack.map((el, index) => {
           return <ProductCard key={index} product={el} />;
         })}
-      </Row>
-  <PaginationComponent />
+      </div>
+      <PaginationComponent />
     </Container>
   );
 }
