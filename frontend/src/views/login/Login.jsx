@@ -148,7 +148,7 @@ function Login() {
                   //   }
                   // }
                 })
-                  popup?.close();
+                  open(`${base_URL}/api/users/registroGithub`, '_self').close()
               }}
               // onClick={github}
             >
