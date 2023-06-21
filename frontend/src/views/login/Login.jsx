@@ -135,16 +135,16 @@ function Login() {
                   "targetWindow",
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
-                popup?.close()
+       
                 window.addEventListener("message", (event)=>{
                   console.log(event);
                   if(event.origin == "https://e-commerce-production-8113.up.railway.app") {
                    
                     if (event.data) {
                       console.log(event.data)
-                      localStorage.setItem("User", JSON.stringify(event.data))
-                      localStorage.setItem("User", 'hola')
-                      popup?.close()
+                      localStorage.setItem("User", JSON.stringify(event.data));
+                     
+                      popup?.close();
                     }
                   }
                 })
