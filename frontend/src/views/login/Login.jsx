@@ -40,6 +40,28 @@ function Login() {
   }
   const github = () => {
     window.open("https://e-commerce-production-8113.up.railway.app/api/users/registroGithub", "_self");
+    const getUser = () => {
+      fetch("https://e-commerce-production-8113.up.railway.app/api/users/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          throw new Error("authentication has been failed!");
+        })
+        .then((resObject) => {
+          setUser(resObject.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
   };
 
   function handleLoginGithub() {
