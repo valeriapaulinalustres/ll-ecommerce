@@ -135,19 +135,20 @@ function Login() {
                   "targetWindow",
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
-       
+       console.log('luego de open')
                 window.addEventListener("message", (event)=>{
-                  console.log(event);
-                  if(event.origin == "https://e-commerce-production-8113.up.railway.app") {
+                  // console.log(event);
+                  // if(event.origin == "https://e-commerce-production-8113.up.railway.app") {
                    
-                    if (event.data) {
-                      console.log(event.data)
+                  //   if (event.data) {
+                  //     console.log(event.data)
                       localStorage.setItem("User", JSON.stringify(event.data));
                      
-                      popup?.close();
-                    }
-                  }
+                    
+                  //   }
+                  // }
                 })
+                  popup?.close();
               }}
               // onClick={github}
             >
