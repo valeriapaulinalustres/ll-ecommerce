@@ -78,6 +78,13 @@ function Login() {
     setForgotPasswordOn(false);
   }
 
+  const laCallback = async function () {
+    console.log('settime out anda');
+    const response = await fetch(`${base_URL}/api/users/login/success`)
+    const responseData = await response.json()
+    console.log(responseData)
+  }
+
   return (
     <Container className={styles.container}>
       <Row>
@@ -135,19 +142,19 @@ function Login() {
                   "targetWindow",
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
-       console.log('luego de open')
-                window.addEventListener("message", (event)=>{
+    setTimeout(laCallback, 5000)
+             //   window.addEventListener("message", (event)=>{
                   // console.log(event);
                   // if(event.origin == "https://e-commerce-production-8113.up.railway.app") {
                    
                   //   if (event.data) {
                   //     console.log(event.data)
-                      localStorage.setItem("User", JSON.stringify(event.data));
+                     // localStorage.setItem("User", JSON.stringify(event.data));
                      
                     
                   //   }
                   // }
-                })
+               // })
                   popup?.close();
               }}
               // onClick={github}
