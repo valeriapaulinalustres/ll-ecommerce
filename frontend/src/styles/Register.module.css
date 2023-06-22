@@ -1,3 +1,10 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .button{
     background-color: var(--lila);
     cursor: pointer;
@@ -17,4 +24,13 @@ color: white;
     background-color: var(--rosa);
   border-radius: 20px;
 
+}
+
+.btnContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50px;
+    margin: 20px 0;
 }
