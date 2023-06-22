@@ -1,0 +1,20 @@
+.button{
+    background-color: var(--lila);
+    cursor: pointer;
+    border-radius: 10px;
+    transition-property: border-radius;
+    transition-duration: 1s;
+border: none;
+width: 100%;
+font-size: 16px;
+margin: 5px 1px;
+padding: 5px;
+font-size: 14px;
+color: white;
+}
+
+.button:hover{
+    background-color: var(--rosa);
+  border-radius: 20px;
+
+}

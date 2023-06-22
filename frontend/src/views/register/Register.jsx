@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -7,6 +6,7 @@ import Container from "react-bootstrap/esm/Container";
 import UsersContext from "../../context/UsersContext";
 import { useNavigate } from "react-router-dom";
 import { toastAlert } from "../../utils/alerts";
+import styles from '../../styles/Register.module.css'
 
 function Register() {
   const { registro, registroGithub, registroGoogle } = useContext(UsersContext);
@@ -95,16 +95,16 @@ function Register() {
           </Form.Group>
         </Row>
 
-        <Button variant="primary" type="submit">
+        <button variant="primary" type="submit" className={styles.button}>
           Registrarme
-        </Button>
+        </button>
       </Form>
       <Row>
         <Col>
-          <Button onClick={handleRegisterGithub}>Registrarme con GitHub</Button>
+          <button onClick={handleRegisterGithub} className={styles.button}>Registrarme con GitHub</button>
         </Col>
         <Col>
-          <Button onClick={handleRegisterGoogle}>Registrarme con Google</Button>
+          <button onClick={handleRegisterGoogle} className={styles.button}>Registrarme con Google</button>
         </Col>
       </Row>
     </Container>
