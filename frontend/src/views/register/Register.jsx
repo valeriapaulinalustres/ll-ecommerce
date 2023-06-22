@@ -2,6 +2,7 @@ import { useContext } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/esm/Container";
 import UsersContext from "../../context/UsersContext";
 import { useNavigate } from "react-router-dom";
 import { toastAlert } from "../../utils/alerts";
@@ -45,7 +46,7 @@ function Register() {
   }
 
   return (
-    <div className={styles.container}>
+    <Container>
       <Form
         onSubmit={handleSubmitRegister}
         action="/api/users/registro"
@@ -107,7 +108,7 @@ function Register() {
           <button onClick={handleRegisterGoogle} className={styles.button}>Registrarme con Google</button>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 
