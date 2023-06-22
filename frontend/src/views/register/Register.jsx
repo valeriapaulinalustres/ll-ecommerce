@@ -99,15 +99,14 @@ function Register() {
           Registrarme
         </button>
       </Form>
-      <h4>ó</h4>
-      <div className={styles.btnContainer}>
-        <div>
+      <Row>
+        <Col>
           <button onClick={handleRegisterGithub} className={styles.button}>Registrarme con GitHub</button>
-        </div>
-        <div>
+        </Col>
+        <Col>
           <button onClick={handleRegisterGoogle} className={styles.button}>Registrarme con Google</button>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Container>
   );
 }
