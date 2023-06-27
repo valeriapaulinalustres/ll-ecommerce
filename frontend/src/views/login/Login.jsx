@@ -25,6 +25,7 @@ function Login() {
   const [forgotPasswordOn, setForgotPasswordOn] = useState(false);
 
   useEffect(() => {
+    console.log('hello');
     window.addEventListener('message', (event) => {
       console.log(event);
       if (event.origin == 'https://e-commerce-production-8113.up.railway.app') {
