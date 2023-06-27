@@ -1,14 +1,14 @@
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Container from "react-bootstrap/Container";
-import styles from "../../styles/Login.module.css";
-import { useContext, useState } from "react";
-import UsersContext from "../../context/UsersContext.js";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
-import { base_URL } from "../../utils/mainRoute";
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Container from 'react-bootstrap/Container';
+import styles from '../../styles/Login.module.css';
+import { useContext, useState } from 'react';
+import UsersContext from '../../context/UsersContext.js';
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
+import { base_URL } from '../../utils/mainRoute';
 
 function Login() {
   const {
@@ -19,10 +19,22 @@ function Login() {
     loginError,
     registroGoogle,
     forgotPassword,
-    setUser
+    setUser,
   } = useContext(UsersContext);
 
   const [forgotPasswordOn, setForgotPasswordOn] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('message', (event) => {
+      console.log(event);
+      if (event.origin == 'https://e-commerce-production-8113.up.railway.app') {
+        if (event.data) {
+          console.log(event.data);
+          localStorage.setItem('User', JSON.stringify(event.data));
+        }
+      }
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -31,28 +43,34 @@ function Login() {
 
     login(e.target[0].value, e.target[1].value).then(() => {
       if (existUser) {
-        navigate("/");
+        navigate('/');
       }
     });
   }
   if (existUser) {
-    navigate("/");
+    navigate('/');
   }
   const github = () => {
-    window.open("https://e-commerce-production-8113.up.railway.app/api/users/registroGithub", "_self");
+    window.open(
+      'https://e-commerce-production-8113.up.railway.app/api/users/registroGithub',
+      '_self'
+    );
     const getUser = () => {
-      fetch("https://e-commerce-production-8113.up.railway.app/api/users/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
+      fetch(
+        'https://e-commerce-production-8113.up.railway.app/api/users/login/success',
+        {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
+          },
+        }
+      )
         .then((response) => {
           if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
+          throw new Error('authentication has been failed!');
         })
         .then((resObject) => {
           setUser(resObject.user);
@@ -78,30 +96,29 @@ function Login() {
     setForgotPasswordOn(false);
   }
 
-
   return (
     <Container className={styles.container}>
       <Row>
         <h1>Login</h1>
       </Row>
       <Form onSubmit={handleSubmitLogin}>
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+        <Form.Group as={Row} className='mb-3' controlId='formHorizontalEmail'>
           <FloatingLabel
-            controlId="floatingInput"
-            label="Email"
-            className="mb-3"
+            controlId='floatingInput'
+            label='Email'
+            className='mb-3'
           >
             <Form.Control
-              type="email"
-              placeholder="name@example.com"
-              name="email"
+              type='email'
+              placeholder='name@example.com'
+              name='email'
             />
           </FloatingLabel>
-          <FloatingLabel controlId="floatingPassword" label="Password">
+          <FloatingLabel controlId='floatingPassword' label='Password'>
             <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
+              type='password'
+              placeholder='Password'
+              name='password'
             />
           </FloatingLabel>
         </Form.Group>
@@ -118,7 +135,7 @@ function Login() {
         <Row>
           <Col>
             <Col>
-              <button className={styles.button} type="submit">
+              <button className={styles.button} type='submit'>
                 Ingresar
               </button>
             </Col>
@@ -127,42 +144,27 @@ function Login() {
 
         {loginError && <div>Usuario o contraseña incorrecto</div>}
         <Row>
-          <Col md="auto">
+          <Col md='auto'>
             <button
               className={styles.button}
               onClick={() => {
                 const popup = window.open(
                   `${base_URL}/api/users/registroGithub`,
-                  "targetWindow",
+                  'targetWindow',
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
-            
-             //   window.addEventListener("message", (event)=>{
-                  // console.log(event);
-                  // if(event.origin == "https://e-commerce-production-8113.up.railway.app") {
-                   
-                  //   if (event.data) {
-                  //     console.log(event.data)
-                     // localStorage.setItem("User", JSON.stringify(event.data));
-                     
-                    
-                  //   }
-                  // }
-               // })
-                //  popup?.close();
               }}
-              // onClick={github}
             >
               Ingresar con Google
             </button>
           </Col>
-          <Col md="auto">
+          <Col md='auto'>
             <button
               className={styles.button}
               onClick={() => {
                 const popup = window.open(
                   `${base_URL}/api/users/registroGithub`,
-                  "targetWindow",
+                  'targetWindow',
                   `toobar=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=620, height=700 `
                 );
               }}
@@ -176,7 +178,7 @@ function Login() {
           <Col>
             <button
               className={styles.button}
-              onClick={() => navigate("/register")}
+              onClick={() => navigate('/register')}
             >
               Crear cuenta
             </button>
@@ -186,8 +188,8 @@ function Login() {
 
       {forgotPasswordOn && (
         <Form
-          className="modal show"
-          style={{ display: "block", position: "initial" }}
+          className='modal show'
+          style={{ display: 'block', position: 'initial' }}
           onSubmit={handleForgotPassword}
         >
           <Modal.Dialog>
@@ -199,11 +201,11 @@ function Login() {
             </Modal.Header>
 
             <Modal.Body>
-              <Form.Control type="email" placeholder="email" />
+              <Form.Control type='email' placeholder='email' />
             </Modal.Body>
 
             <Modal.Footer>
-              <button type="submit" className={styles.button}>
+              <button type='submit' className={styles.button}>
                 Guardar cambios
               </button>
             </Modal.Footer>
@@ -214,4 +216,3 @@ function Login() {
   );
 }
 export default Login;
-
