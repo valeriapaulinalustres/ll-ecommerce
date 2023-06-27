@@ -24,16 +24,23 @@ function Login() {
 
   const [forgotPasswordOn, setForgotPasswordOn] = useState(false);
 
+  // useEffect(() => {
+  //   console.log('hello today');
+  //   window.addEventListener('message', (event) => {
+  //     console.log(event);
+  //     if (event.origin == 'https://e-commerce-production-8113.up.railway.app') {
+  //       if (event.data) {
+  //         console.log(event.data);
+  //         localStorage.setItem('User', JSON.stringify(event.data));
+  //       }
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
-    console.log('hello today');
+    console.log('hello');
     window.addEventListener('message', (event) => {
       console.log(event);
-      if (event.origin == 'https://e-commerce-production-8113.up.railway.app') {
-        if (event.data) {
-          console.log(event.data);
-          localStorage.setItem('User', JSON.stringify(event.data));
-        }
-      }
     });
   }, []);
 
@@ -129,7 +136,7 @@ function Login() {
               onClick={() => setForgotPasswordOn(true)}
               className={styles.questionForgotPassword}
             >
-              ¿Olvidaste tu contraseña?
+              ¿Olvidaste tu contraseña hoy?
             </p>
           </Col>
         </Row>
