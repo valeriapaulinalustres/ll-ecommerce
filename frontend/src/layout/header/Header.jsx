@@ -103,7 +103,7 @@ function Header() {
             </Link>
           )}
 
-          <Form className='d-flex'>
+          {/* <Form className='d-flex'>
             <Form.Control
               type='search'
               placeholder='Search'
@@ -111,7 +111,7 @@ function Header() {
               aria-label='Search'
             />
             <button className={styles.button}>Buscar</button>
-          </Form>
+          </Form> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

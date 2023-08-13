@@ -1,6 +1,5 @@
 # Fullstack e-commerce
 
-
 ## Backend Features
 
 Node Js,
@@ -18,7 +17,7 @@ Nodemailer,
 Passport,
 Socket io.
 
-Backend deploy: "https://e-commerce-production-8113.up.railway.app"
+Backend deploy: "https://e-commerce-ten-orcin.vercel.app/"
 
 ## Database
 
@@ -35,4 +34,5 @@ SweetAlert.
 Frontend deploy: "https://ll-ecommerce-p4ro.vercel.app/"
 
 ## Fulstack Deploy
- Please run "https://ll-ecommerce-p4ro.vercel.app/"
+
+Please run "https://ll-ecommerce-p4ro.vercel.app/"

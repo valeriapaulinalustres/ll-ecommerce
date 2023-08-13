@@ -3,7 +3,10 @@
     height: 40rem;
     margin: 2rem 1rem;
 border: none;
-
+ display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .body{

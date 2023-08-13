@@ -137,7 +137,7 @@ function Login() {
               onClick={() => setForgotPasswordOn(true)}
               className={styles.questionForgotPassword}
             >
-              ¿Olvidaste tu contraseña hoy?
+              ¿Olvidaste tu contraseña?
             </p>
           </Col>
         </Row>
