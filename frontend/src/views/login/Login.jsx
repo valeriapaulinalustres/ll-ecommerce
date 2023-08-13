@@ -152,7 +152,7 @@ function Login() {
         </Row>
 
         {loginError && <div>Usuario o contraseña incorrecto</div>}
-        <Row>
+        {/* <Row>
           <Col md='auto'>
             <button
               className={styles.button}
@@ -181,7 +181,7 @@ function Login() {
               Ingresar con Github
             </button>
           </Col>
-        </Row>
+        </Row> */}
         <p className={styles.questionAccount}>¿No tenés una cuenta? </p>
         <Row>
           <Col>

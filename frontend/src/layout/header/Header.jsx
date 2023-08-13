@@ -14,7 +14,7 @@ import { HiOutlineUsers } from 'react-icons/hi';
 import { CgProfile } from 'react-icons/cg';
 
 function Header() {
-  const { login, existUser, setExistUser, logout, getCartById, user } =
+  const { login, existUser, setExistUser, logout, getCartById, user, setUser } =
     useContext(UsersContext);
 
   const { setProductToEdit } = useContext(ProductsContext);
@@ -24,6 +24,7 @@ function Header() {
   async function handleLogout() {
     const returned = await logout(user);
     navigate('/');
+    setUser({});
     setExistUser(false);
   }
 

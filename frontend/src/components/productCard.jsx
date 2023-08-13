@@ -19,9 +19,7 @@ function ProductCard({ product }) {
 
   return (
     <Card className={styles.cardContainer} data-testid='product-card'>
-      <Card.Img
-        src={`https://cdn.pixabay.com/photo/2023/06/10/14/48/zebras-8054175__340.jpg`}
-      />
+      <Card.Img src={`https://placedog.net/500?r`} />
       <Card.Body className={styles.body}>
         <Card.Title>{title}</Card.Title>
         <Card.Text className={styles.text}>{description}</Card.Text>
