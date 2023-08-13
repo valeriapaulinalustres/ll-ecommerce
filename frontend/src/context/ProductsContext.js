@@ -18,6 +18,8 @@ const ProductsProvider = ({ children }) => {
     const responseData = await response.json();
     setAllProductsFromBack(responseData?.response?.products);
     setPageCount(responseData.response.totalPages);
+    console.log(responseData?.response?.products)
+    console.log(responseData)
   }
 
   // --- Trae producto por id ---
@@ -25,6 +27,7 @@ const ProductsProvider = ({ children }) => {
     const response = await fetch(`${base_URL}/api/products/${id}`);
     const responseData = await response.json();
     setProductById(responseData.response.product);
+    return responseData.response.product;
   }
 
   // --- Agregar productos ---

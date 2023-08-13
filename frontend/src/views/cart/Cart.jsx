@@ -1,11 +1,11 @@
-import { useContext, useEffect } from "react";
-import styles from "../../styles/Cart.module.css";
-import CartContext from "../../context/CartContext";
-import UsersContext from "../../context/UsersContext";
-import { Link } from "react-router-dom";
-import { TiPlusOutline } from "react-icons/ti";
-import { TiMinusOutline } from "react-icons/ti";
-import { toastAlert } from "../../utils/alerts";
+import { useContext, useEffect } from 'react';
+import styles from '../../styles/Cart.module.css';
+import CartContext from '../../context/CartContext';
+import UsersContext from '../../context/UsersContext';
+import { Link } from 'react-router-dom';
+import { TiPlusOutline } from 'react-icons/ti';
+import { TiMinusOutline } from 'react-icons/ti';
+import { toastAlert } from '../../utils/alerts';
 
 function Cart() {
   const {
@@ -25,20 +25,19 @@ function Cart() {
     getCartById(user.cartId);
   }, []);
 
-  function handleAddProduct(pid) {
-    addProductToCart(pid, user.cartId, user).then(() =>
-      getCartById(user.cartId)
-    );
+  async function handleAddProduct(pid) {
+    await addProductToCart(pid, user.cartId, user);
+    getCartById(user.cartId);
   }
 
-  function handleDeleteProduct(pid) {
-    deleteProductFromCart(user.cartId, pid).then(() =>
-      getCartById(user.cartId)
-    );
+  async function handleDeleteProduct(pid) {
+    await deleteProductFromCart(user.cartId, pid);
+    getCartById(user.cartId);
   }
 
-  function handleDeleteCart() {
-    deleteCart(user.cartId).then(() => getCartById(user.cartId));
+  async function handleDeleteCart() {
+    await deleteCart(user.cartId);
+    getCartById(user.cartId);
   }
 
   let subtotal = 0;
@@ -47,37 +46,40 @@ function Cart() {
     subtotal = subtotal + subtotalEl;
   });
 
-  function handleChangeQty(e, pid) {
-    if (e.target.value == "") {
-      return toastAlert("warning", "Complete una cantidad a comprar por favor");
+  async function handleChangeQty(e, pid) {
+    if (e.target.value == '') {
+      return toastAlert('warning', 'Complete una cantidad a comprar por favor');
     }
 
     if (e.target.value < 1) {
-      return toastAlert("error", "Debe ingresar valores mayores o iguales a 1");
+      return toastAlert('error', 'Debe ingresar valores mayores o iguales a 1');
     }
 
     let qty = e.target.value;
     let cid = user.cartId;
 
-    editProductQty(cid, pid, qty).then(() => getCartById(user.cartId));
+    await editProductQty(cid, pid, qty);
+    getCartById(user.cartId);
 
-    setTimeout(() => (e.target.value = ""), 3000);
+    setTimeout(() => (e.target.value = ''), 3000);
   }
 
-  function handleEraseProduct(e, pid) {
+  async function handleEraseProduct(e, pid) {
     let cid = user.cartId;
-    eraseProductFromCart(cid, pid).then(() => getCartById(user.cartId));
+    await eraseProductFromCart(cid, pid);
+    getCartById(user.cartId);
   }
 
-  function handleCompleteSale() {
-    completeSale(user.cartId, user).then(() => getCartById(user.cartId));
+  async function handleCompleteSale() {
+    await completeSale(user.cartId, user);
+    getCartById(user.cartId);
   }
 
   return (
     <div className={styles.container}>
-      <div className="card">
-        <div className="row">
-          <div className="col-md-8 cart">
+      <div className='card'>
+        <div className='row'>
+          <div className='col-md-8 cart'>
             <div className={styles.cartHeader}>
               <h2 className={styles.title}>Carrito de Compras</h2>
               {cart?.message?.products?.length > 0 ? (
@@ -90,7 +92,7 @@ function Cart() {
               <div className={styles.itemTotalTitle}>
                 {cart?.message?.products
                   ? `${cart?.message?.products?.length} items`
-                  : "0 items"}
+                  : '0 items'}
               </div>
             </div>
 
@@ -125,15 +127,15 @@ function Cart() {
                         <TiPlusOutline className={styles.icon} />
                       </button>
 
-                      <label htmlFor="qty" className={styles.qtyToBuy}>
-                        {" "}
+                      <label htmlFor='qty' className={styles.qtyToBuy}>
+                        {' '}
                         o agrega una cantidad a comprar:
                       </label>
                       <input
-                        type="number"
-                        id="qty"
+                        type='number'
+                        id='qty'
                         onChange={(e) => handleChangeQty(e, el.id?._id)}
-                        min="1"
+                        min='1'
                         className={styles.input}
                       />
                     </div>
@@ -154,13 +156,13 @@ function Cart() {
               <p>Carrito vacío</p>
             )}
 
-            <Link to="/" className={styles.back}>
+            <Link to='/' className={styles.back}>
               Volver al shop
             </Link>
           </div>
 
           {cart?.message?.products?.length > 0 && (
-            <div className="col-md-4 summary">
+            <div className='col-md-4 summary'>
               <h5 className={styles.summaryTittle}>Resumen</h5>
 
               <div className={styles.textContainer}>
@@ -171,7 +173,7 @@ function Cart() {
                 <div className={styles.textRight}>
                   {cart?.message?.products
                     ? `${cart?.message?.products.length} items: `
-                    : "0 items: "}
+                    : '0 items: '}
                   ${subtotal}
                 </div>
               </div>
@@ -186,10 +188,10 @@ function Cart() {
                 <input id="code" placeholder="Enter your code" />
               </form> */}
               <div
-                className="row"
+                className='row'
                 style={{
-                  borderTop: "1px solid rgba(0,0,0,.1)",
-                  padding: "2vh 0",
+                  borderTop: '1px solid rgba(0,0,0,.1)',
+                  padding: '2vh 0',
                 }}
               >
                 <div className={styles.textRight}>TOTAL PRICE</div>

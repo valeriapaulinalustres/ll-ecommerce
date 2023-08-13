@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import UsersContext from "../../context/UsersContext";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { MdOutlineKey } from "react-icons/md";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { toastAlert } from "../../utils/alerts";
-import styles from "../../styles/Users.module.css";
+import { useContext, useEffect, useState } from 'react';
+import UsersContext from '../../context/UsersContext';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { MdOutlineKey } from 'react-icons/md';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { toastAlert } from '../../utils/alerts';
+import styles from '../../styles/Users.module.css';
 
 function Users() {
   const {
@@ -25,8 +25,9 @@ function Users() {
   const [emailToChangeRol, setEmailToChangeRol] = useState(null);
   const [newRol, setNewRol] = useState(null);
 
-  function handleDeleteUsersDisconnected() {
-    deleteUsersDisconnected().then(() => getUsers());
+  async function handleDeleteUsersDisconnected() {
+    await deleteUsersDisconnected();
+    getUsers();
   }
 
   function handleDeleteUser(email) {
@@ -34,8 +35,8 @@ function Users() {
   }
 
   function handleChangeRolByAdmin(e) {
-    if (newRol === "seleccionar" || !newRol) {
-      return toastAlert("error", "Debe seleccionar un nuevo rol");
+    if (newRol === 'seleccionar' || !newRol) {
+      return toastAlert('error', 'Debe seleccionar un nuevo rol');
     }
 
     changeRolByAdmin(newRol, emailToChangeRol);
@@ -47,19 +48,19 @@ function Users() {
   return (
     <div className={styles.container}>
       <h2>Lista de usuarios</h2>
-      <table className="table table-striped">
+      <table className='table table-striped'>
         <thead>
           <tr>
-            <th scope="col" className={styles.text}>
+            <th scope='col' className={styles.text}>
               Nombre
             </th>
-            <th scope="col" className={styles.text}>
+            <th scope='col' className={styles.text}>
               Email
             </th>
-            <th scope="col" className={styles.text}>
+            <th scope='col' className={styles.text}>
               Rol
             </th>
-            <th scope="col" className={styles.text}>
+            <th scope='col' className={styles.text}>
               Edición
             </th>
           </tr>
@@ -89,8 +90,8 @@ function Users() {
           })}
           {selectNewRolOn && (
             <div
-              className="modal show"
-              style={{ display: "block", position: "initial" }}
+              className='modal show'
+              style={{ display: 'block', position: 'initial' }}
             >
               <Modal.Dialog>
                 <Modal.Header
@@ -102,17 +103,17 @@ function Users() {
 
                 <Modal.Body>
                   <select onChange={(e) => setNewRol(e.target.value)}>
-                    <option value="seleccionar">--Seleccionar--</option>
-                    <option value="user">User</option>
-                    <option value="premium">Premium</option>
-                    <option value="admin">Admin</option>
+                    <option value='seleccionar'>--Seleccionar--</option>
+                    <option value='user'>User</option>
+                    <option value='premium'>Premium</option>
+                    <option value='admin'>Admin</option>
                   </select>
                 </Modal.Body>
 
                 <Modal.Footer>
                   <Button
-                    variant="primary"
-                    type="submit"
+                    variant='primary'
+                    type='submit'
                     onClick={handleChangeRolByAdmin}
                   >
                     Guardar cambios

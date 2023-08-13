@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import ProductCard from "../../components/productCard";
-import ProductsContext from "../../context/ProductsContext";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import UsersContext from "../../context/UsersContext";
-import { toastAlert } from "../../utils/alerts";
-import { Link, useNavigate } from "react-router-dom";
-import CartContext from "../../context/CartContext";
-import { TfiPencil } from "react-icons/tfi";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import styles from "../../styles/Product.module.css";
+import { useContext } from 'react';
+import ProductCard from '../../components/productCard';
+import ProductsContext from '../../context/ProductsContext';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import UsersContext from '../../context/UsersContext';
+import { toastAlert } from '../../utils/alerts';
+import { Link, useNavigate } from 'react-router-dom';
+import CartContext from '../../context/CartContext';
+import { TfiPencil } from 'react-icons/tfi';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import styles from '../../styles/Product.module.css';
 
 function Product() {
   const { productById, productToEdit, setProductToEdit, deleteProduct } =
@@ -30,24 +30,25 @@ function Product() {
 
   function handleAddToCart(pid) {
     if (existUser) {
-      console.log("user cart", user.cartId);
-      if (!user.hasOwnProperty("cartId")) {
+      console.log('user cart', user.cartId);
+      if (!user.hasOwnProperty('cartId')) {
         createNewCart(pid, 1);
       } else {
         addProductToCart(pid, user.cartId, user);
       }
     } else {
-      toastAlert("info", "Debés ingresar a tu cuenta");
-      navigate("/login");
+      toastAlert('info', 'Debés ingresar a tu cuenta');
+      navigate('/login');
     }
   }
 
   function handleEditProduct() {
-    navigate("/edit-product");
+    navigate('/edit-product');
   }
 
-  function handleDeleteProduct(id) {
-    deleteProduct(id, user).then(() => navigate("/"));
+  async function handleDeleteProduct(id) {
+    await deleteProduct(id, user);
+    navigate('/');
   }
 
   return (
@@ -55,7 +56,7 @@ function Product() {
       <div className={styles.imgContainer}>
         <img
           src={`https://cdn.pixabay.com/photo/2023/06/10/14/48/zebras-8054175__340.jpg`}
-          width="100%"
+          width='100%'
           className={styles.img}
         />
       </div>
@@ -67,22 +68,22 @@ function Product() {
         <h2>Precio: ${price}</h2>
         <h4>Stock: {stock}</h4>
         <button
-          variant="primary"
+          variant='primary'
           onClick={() => handleAddToCart(_id)}
           className={styles.button}
         >
           Agregar al carrito
         </button>
-        {(user.role === "admin" || user.role === "premium") && (
+        {(user.role === 'admin' || user.role === 'premium') && (
           <div className={styles.buttonContainer}>
-            <button className={styles.button}>
-              <TfiPencil onClick={handleEditProduct} className={styles.icon} />
+            <button className={styles.button} onClick={handleEditProduct}>
+              <TfiPencil className={styles.icon} />
             </button>
-            <button className={styles.button}>
-              <RiDeleteBin6Line
-                onClick={() => handleDeleteProduct(_id)}
-                className={styles.icon}
-              />
+            <button
+              className={styles.button}
+              onClick={() => handleDeleteProduct(_id)}
+            >
+              <RiDeleteBin6Line className={styles.icon} />
             </button>
           </div>
         )}
@@ -90,7 +91,7 @@ function Product() {
         <button
           className={styles.button}
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
         >
           Volver al Home

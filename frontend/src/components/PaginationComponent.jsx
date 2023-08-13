@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import Pagination from "react-bootstrap/Pagination";
-import ProductsContext from "../context/ProductsContext";
-import styles from "../styles/Home.module.css";
+import { useContext } from 'react';
+import Pagination from 'react-bootstrap/Pagination';
+import ProductsContext from '../context/ProductsContext';
+import styles from '../styles/Home.module.css';
 
 function PaginationComponent() {
   const { pageCount, setPageCount, page, setPage } =
@@ -29,7 +29,11 @@ function PaginationComponent() {
     <Pagination className={styles.paginationContainer}>
       <Pagination.Prev disabled={page === 1} onClick={handlePrev} />
       <Pagination.Item>{page}</Pagination.Item>
-      <Pagination.Next disabled={page === pageCount} onClick={handleNext} />
+      <Pagination.Next
+        disabled={page === pageCount}
+        onClick={handleNext}
+        data-testid='btn-next'
+      />
     </Pagination>
   );
 }

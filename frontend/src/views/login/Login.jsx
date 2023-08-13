@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Container from 'react-bootstrap/Container';
 import styles from '../../styles/Login.module.css';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import UsersContext from '../../context/UsersContext.js';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
@@ -46,15 +46,16 @@ function Login() {
 
   const navigate = useNavigate();
 
-  function handleSubmitLogin(e) {
+  async function handleSubmitLogin(e) {
     e.preventDefault();
 
-    login(e.target[0].value, e.target[1].value).then(() => {
-      if (existUser) {
-        navigate('/');
-      }
-    });
+    await login(e.target[0].value, e.target[1].value);
+
+    if (existUser) {
+      navigate('/');
+    }
   }
+
   if (existUser) {
     navigate('/');
   }

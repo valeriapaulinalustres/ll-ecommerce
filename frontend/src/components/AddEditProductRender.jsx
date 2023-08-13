@@ -1,9 +1,9 @@
-import Button from "react-bootstrap/Button";
-import styles from "../styles/AddEditProduct.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import ProductsContext from "../context/ProductsContext";
-import UsersContext from "../context/UsersContext";
+import Button from 'react-bootstrap/Button';
+import styles from '../styles/AddEditProduct.module.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import ProductsContext from '../context/ProductsContext';
+import UsersContext from '../context/UsersContext';
 
 function AddEditProductRender({ handleAddProduct }) {
   const { productToEdit, editProduct } = useContext(ProductsContext);
@@ -11,7 +11,7 @@ function AddEditProductRender({ handleAddProduct }) {
 
   const navigate = useNavigate();
 
-  function handleEditProduct(e) {
+  async function handleEditProduct(e) {
     e.preventDefault();
     let imgs = [];
     let imputs = [e.target[0].value, e.target[1].value, e.target[2].value];
@@ -34,11 +34,14 @@ function AddEditProductRender({ handleAddProduct }) {
     };
 
     for (let i = 0; i < 9; i++) {
-      e.target[i].value = "";
+      e.target[i].value = '';
     }
-    editProduct(productToEdit.id, editedProduct, user).then(() =>
-      navigate("/")
+    const returnedPromise = await editProduct(
+      productToEdit.id,
+      editedProduct,
+      user
     );
+    navigate('/');
   }
 
   return (
@@ -51,71 +54,71 @@ function AddEditProductRender({ handleAddProduct }) {
             onSubmit={(e) => handleEditProduct(e)}
           >
             <input
-              type="text"
+              type='text'
               defaultValue={productToEdit?.thumbnails[0]}
               className={styles.input}
             />
             <input
-              type="text"
+              type='text'
               defaultValue={productToEdit?.thumbnails[1]}
               className={styles.input}
             />
             <input
-              type="text"
+              type='text'
               defaultValue={productToEdit?.thumbnails[2]}
               className={styles.input}
             />
             <input
-              type="text"
+              type='text'
               required
               defaultValue={productToEdit?.title}
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Categoría"
+              type='text'
+              placeholder='Categoría'
               required
               defaultValue={productToEdit?.category}
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Código"
+              type='text'
+              placeholder='Código'
               required
               defaultValue={productToEdit?.code}
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Descripción"
+              type='text'
+              placeholder='Descripción'
               required
               defaultValue={productToEdit?.description}
               className={styles.input}
             />
             <input
-              type="number"
-              placeholder="Precio"
+              type='number'
+              placeholder='Precio'
               required
               defaultValue={productToEdit?.price}
               className={styles.input}
             />
             <input
-              type="number"
-              placeholder="Stock"
+              type='number'
+              placeholder='Stock'
               required
               defaultValue={productToEdit?.stock}
               className={styles.input}
             />
-            Status:{" "}
+            Status:{' '}
             <input
-              type="checkbox"
+              type='checkbox'
               defaultChecked={productToEdit?.status}
               className={styles.input}
             />
-            <button type="submit" className={styles.button}>
+            <button type='submit' className={styles.button}>
               Actualizar producto
             </button>
-            <button className={styles.button} onClick={() => navigate("/")}>
+            <button className={styles.button} onClick={() => navigate('/')}>
               Volver al Home
             </button>
           </form>
@@ -125,62 +128,62 @@ function AddEditProductRender({ handleAddProduct }) {
           <h2>Crear producto</h2>
           <form className={styles.productContainer} onSubmit={handleAddProduct}>
             <input
-              type="text"
-              placeholder="img URL 1"
+              type='text'
+              placeholder='img URL 1'
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="img URL 2"
+              type='text'
+              placeholder='img URL 2'
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="img URL 3"
+              type='text'
+              placeholder='img URL 3'
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Título"
+              type='text'
+              placeholder='Título'
               required
               defaultValue={productToEdit?.title}
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Categoría"
+              type='text'
+              placeholder='Categoría'
               required
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Código"
+              type='text'
+              placeholder='Código'
               required
               className={styles.input}
             />
             <input
-              type="text"
-              placeholder="Descripción"
+              type='text'
+              placeholder='Descripción'
               required
               className={styles.input}
             />
             <input
-              type="number"
-              placeholder="Precio"
+              type='number'
+              placeholder='Precio'
               required
               className={styles.input}
             />
             <input
-              type="number"
-              placeholder="Stock"
+              type='number'
+              placeholder='Stock'
               required
               className={styles.input}
             />
-            Status: <input type="checkbox" className={styles.input} />
-            <button className={styles.button} type="submit">
+            Status: <input type='checkbox' className={styles.input} />
+            <button className={styles.button} type='submit'>
               Crear producto
             </button>
-            <button className={styles.button} onClick={() => navigate("/")}>
+            <button className={styles.button} onClick={() => navigate('/')}>
               Volver al Home
             </button>
           </form>
