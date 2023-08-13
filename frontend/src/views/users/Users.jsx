@@ -112,7 +112,7 @@ function Users() {
 
                 <Modal.Footer>
                   <Button
-                    variant='primary'
+                    className={styles.button}
                     type='submit'
                     onClick={handleChangeRolByAdmin}
                   >

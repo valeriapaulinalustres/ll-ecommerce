@@ -36,3 +36,11 @@ Frontend deploy: "https://ll-ecommerce-p4ro.vercel.app/"
 ## Fulstack Deploy
 
 Please run "https://ll-ecommerce-p4ro.vercel.app/"
+
+## General Features
+
+Different user's roles
+Users management in admin role
+Products management in admin role
+e-commerce in client role
+Mailing
